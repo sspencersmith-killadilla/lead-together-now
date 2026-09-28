@@ -14,16 +14,419 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      action_items: {
+        Row: {
+          body: string
+          created_at: string
+          created_by: string
+          done_at: string | null
+          due_date: string | null
+          id: string
+          meeting_id: string | null
+          owner_id: string
+          pairing_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          created_by: string
+          done_at?: string | null
+          due_date?: string | null
+          id?: string
+          meeting_id?: string | null
+          owner_id: string
+          pairing_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          created_by?: string
+          done_at?: string | null
+          due_date?: string | null
+          id?: string
+          meeting_id?: string | null
+          owner_id?: string
+          pairing_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "action_items_meeting_id_fkey"
+            columns: ["meeting_id"]
+            isOneToOne: false
+            referencedRelation: "meetings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "action_items_pairing_id_fkey"
+            columns: ["pairing_id"]
+            isOneToOne: false
+            referencedRelation: "pairings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      agenda_items: {
+        Row: {
+          author_id: string
+          body: string
+          created_at: string
+          done: boolean
+          id: string
+          meeting_id: string
+        }
+        Insert: {
+          author_id: string
+          body: string
+          created_at?: string
+          done?: boolean
+          id?: string
+          meeting_id: string
+        }
+        Update: {
+          author_id?: string
+          body?: string
+          created_at?: string
+          done?: boolean
+          id?: string
+          meeting_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agenda_items_meeting_id_fkey"
+            columns: ["meeting_id"]
+            isOneToOne: false
+            referencedRelation: "meetings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      meeting_notes: {
+        Row: {
+          author_id: string
+          body: string
+          id: string
+          meeting_id: string
+          updated_at: string
+          visibility: string
+        }
+        Insert: {
+          author_id: string
+          body?: string
+          id?: string
+          meeting_id: string
+          updated_at?: string
+          visibility?: string
+        }
+        Update: {
+          author_id?: string
+          body?: string
+          id?: string
+          meeting_id?: string
+          updated_at?: string
+          visibility?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meeting_notes_meeting_id_fkey"
+            columns: ["meeting_id"]
+            isOneToOne: false
+            referencedRelation: "meetings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      meetings: {
+        Row: {
+          ai_summary: string | null
+          created_at: string
+          created_by: string
+          held_on: string
+          id: string
+          leader_prompts: Json
+          pairing_id: string
+          report_prompts: Json
+          status: string
+          template_name: string | null
+          workspace_id: string
+        }
+        Insert: {
+          ai_summary?: string | null
+          created_at?: string
+          created_by: string
+          held_on?: string
+          id?: string
+          leader_prompts?: Json
+          pairing_id: string
+          report_prompts?: Json
+          status?: string
+          template_name?: string | null
+          workspace_id: string
+        }
+        Update: {
+          ai_summary?: string | null
+          created_at?: string
+          created_by?: string
+          held_on?: string
+          id?: string
+          leader_prompts?: Json
+          pairing_id?: string
+          report_prompts?: Json
+          status?: string
+          template_name?: string | null
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meetings_pairing_id_fkey"
+            columns: ["pairing_id"]
+            isOneToOne: false
+            referencedRelation: "pairings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "meetings_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pairings: {
+        Row: {
+          active: boolean
+          cadence_days: number
+          created_at: string
+          id: string
+          kind: string
+          leader_id: string
+          report_id: string
+          template_id: string | null
+          workspace_id: string
+        }
+        Insert: {
+          active?: boolean
+          cadence_days?: number
+          created_at?: string
+          id?: string
+          kind?: string
+          leader_id: string
+          report_id: string
+          template_id?: string | null
+          workspace_id: string
+        }
+        Update: {
+          active?: boolean
+          cadence_days?: number
+          created_at?: string
+          id?: string
+          kind?: string
+          leader_id?: string
+          report_id?: string
+          template_id?: string | null
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pairings_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "templates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pairings_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string
+          email: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string
+          email?: string
+          id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string
+          email?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      templates: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          leader_prompts: Json
+          name: string
+          published: boolean
+          report_prompts: Json
+          updated_at: string
+          version: number
+          workspace_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          id?: string
+          leader_prompts?: Json
+          name: string
+          published?: boolean
+          report_prompts?: Json
+          updated_at?: string
+          version?: number
+          workspace_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          leader_prompts?: Json
+          name?: string
+          published?: boolean
+          report_prompts?: Json
+          updated_at?: string
+          version?: number
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "templates_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workspace_invites: {
+        Row: {
+          accepted_at: string | null
+          created_at: string
+          email: string
+          id: string
+          invited_by: string
+          role: Database["public"]["Enums"]["workspace_role"]
+          workspace_id: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          invited_by: string
+          role?: Database["public"]["Enums"]["workspace_role"]
+          workspace_id: string
+        }
+        Update: {
+          accepted_at?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          invited_by?: string
+          role?: Database["public"]["Enums"]["workspace_role"]
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workspace_invites_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workspace_members: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["workspace_role"]
+          user_id: string
+          workspace_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["workspace_role"]
+          user_id: string
+          workspace_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["workspace_role"]
+          user_id?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workspace_members_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workspaces: {
+        Row: {
+          ai_enabled: boolean
+          created_at: string
+          created_by: string
+          id: string
+          name: string
+        }
+        Insert: {
+          ai_enabled?: boolean
+          created_at?: string
+          created_by: string
+          id?: string
+          name: string
+        }
+        Update: {
+          ai_enabled?: boolean
+          created_at?: string
+          created_by?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      accept_invites: { Args: never; Returns: number }
+      can_view_pairing: { Args: { _p: string }; Returns: boolean }
+      create_workspace: { Args: { _name: string }; Returns: string }
+      has_workspace_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["workspace_role"]
+          _ws: string
+        }
+        Returns: boolean
+      }
+      is_member: { Args: { _ws: string }; Returns: boolean }
+      is_pairing_party: { Args: { _p: string }; Returns: boolean }
+      meeting_pairing: { Args: { _m: string }; Returns: string }
+      shares_workspace: { Args: { _u: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      workspace_role: "owner" | "admin" | "member"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +553,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      workspace_role: ["owner", "admin", "member"],
+    },
   },
 } as const
