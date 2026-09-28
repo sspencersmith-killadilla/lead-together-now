@@ -34,9 +34,14 @@ function Shell() {
   const { workspace, workspaces, switchWorkspace } = useWorkspace();
   return (
     <div className="min-h-screen">
-      <header className="border-b bg-card/60">
+      <header className="border-b border-border bg-card/40 backdrop-blur-sm">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-6 gap-y-2 px-6 py-4">
-          <Link to="/home" className="font-serif text-xl">Tandem</Link>
+          <Link to="/home" className="flex items-center gap-2.5">
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-foreground">
+              <div className="h-3.5 w-3.5 rotate-45 border-2 border-background" />
+            </div>
+            <span className="font-serif text-xl italic">Tandem</span>
+          </Link>
           {workspaces.length > 1 ? (
             <select
               value={workspace.id}
