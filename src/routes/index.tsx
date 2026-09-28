@@ -113,7 +113,7 @@ function Landing() {
                 Try the demo
               </Link>
               <a
-                href="https://github.com"
+                href="https://github.com/mckinneylibrary/leadershiptandem"
                 target="_blank"
                 rel="noreferrer"
                 className="w-full rounded-full border border-border bg-transparent px-8 py-4 font-medium text-foreground/80 transition-all hover:bg-secondary sm:w-auto"
