@@ -146,5 +146,6 @@ function Home() {
         )}
       </aside>
     </div>
+    </div>
   );
 }
