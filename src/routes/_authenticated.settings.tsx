@@ -95,6 +95,8 @@ function Settings() {
         <button onClick={() => setCreating(true)} className="text-sm font-medium text-primary hover:underline">+ Create another workspace</button>
       </section>
 
+      {isAdmin && <Branding />}
+
       <section className="space-y-3">
         <h2 className="text-xl">Members</h2>
         <ul className="divide-y rounded-lg border bg-card">
@@ -147,5 +149,67 @@ function Settings() {
         </section>
       )}
     </div>
+  );
+}
+
+function Branding() {
+  const { workspace, refresh } = useWorkspace();
+  const [f, setF] = useState({
+    brand_name: workspace.brand_name ?? "",
+    logo_url: workspace.logo_url ?? "",
+    accent_color: workspace.accent_color ?? "#10b981",
+    use_accent: !!workspace.accent_color,
+    welcome_headline: workspace.welcome_headline ?? "",
+    welcome_tagline: workspace.welcome_tagline ?? "",
+    support_contact: workspace.support_contact ?? "",
+  });
+  const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement>) =>
+    setF({ ...f, [k]: e.target.type === "checkbox" ? e.target.checked : e.target.value });
+  const clean = (v: string) => v.trim() || null;
+
+  async function save() {
+    const { error } = await supabase.from("workspaces").update({
+      brand_name: clean(f.brand_name),
+      logo_url: clean(f.logo_url),
+      accent_color: f.use_accent ? f.accent_color : null,
+      welcome_headline: clean(f.welcome_headline),
+      welcome_tagline: clean(f.welcome_tagline),
+      support_contact: clean(f.support_contact),
+    }).eq("id", workspace.id);
+    if (error) toast.error(error.message);
+    else { toast.success("Branding saved"); refresh(); }
+  }
+
+  const field = (label: string, k: keyof typeof f, placeholder: string, hint?: string) => (
+    <label className="block space-y-1 text-sm">
+      <span className="font-medium">{label}</span>
+      <input className={`${box} w-full`} value={f[k] as string} onChange={set(k)} placeholder={placeholder} />
+      {hint && <span className="block text-xs text-muted-foreground">{hint}</span>}
+    </label>
+  );
+
+  return (
+    <section className="space-y-4">
+      <div>
+        <h2 className="text-xl">Branding</h2>
+        <p className="text-sm text-muted-foreground">Make this workspace look like your organization. Everyone in the workspace sees it.</p>
+      </div>
+      <div className="grid gap-4 rounded-lg border bg-card p-6 md:grid-cols-2">
+        {field("Product name", "brand_name", "Tandem", "Shown in the header instead of “Tandem”.")}
+        {field("Logo link", "logo_url", "https://yourorg.org/logo.png", "A link to a square image of your logo.")}
+        {field("Welcome headline", "welcome_headline", "Great leaders meet often.")}
+        {field("Welcome message", "welcome_tagline", "A short note shown at the top of everyone’s 1-on-1s page.")}
+        {field("Help contact", "support_contact", "help@yourorg.org", "An email or web link people can use for help.")}
+        <div className="space-y-1 text-sm">
+          <span className="font-medium">Accent color</span>
+          <div className="flex items-center gap-3">
+            <input type="checkbox" className="accent-primary" checked={f.use_accent} onChange={set("use_accent")} />
+            <input type="color" disabled={!f.use_accent} value={f.accent_color} onChange={set("accent_color")} className="h-9 w-14 cursor-pointer rounded border border-input bg-background disabled:opacity-40" />
+            <span className="text-xs text-muted-foreground">{f.use_accent ? f.accent_color : "Using the default emerald"}</span>
+          </div>
+        </div>
+      </div>
+      <button onClick={save} className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">Save branding</button>
+    </section>
   );
 }

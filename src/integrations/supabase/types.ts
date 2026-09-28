@@ -383,25 +383,43 @@ export type Database = {
       }
       workspaces: {
         Row: {
+          accent_color: string | null
           ai_enabled: boolean
+          brand_name: string | null
           created_at: string
           created_by: string
           id: string
+          logo_url: string | null
           name: string
+          support_contact: string | null
+          welcome_headline: string | null
+          welcome_tagline: string | null
         }
         Insert: {
+          accent_color?: string | null
           ai_enabled?: boolean
+          brand_name?: string | null
           created_at?: string
           created_by: string
           id?: string
+          logo_url?: string | null
           name: string
+          support_contact?: string | null
+          welcome_headline?: string | null
+          welcome_tagline?: string | null
         }
         Update: {
+          accent_color?: string | null
           ai_enabled?: boolean
+          brand_name?: string | null
           created_at?: string
           created_by?: string
           id?: string
+          logo_url?: string | null
           name?: string
+          support_contact?: string | null
+          welcome_headline?: string | null
+          welcome_tagline?: string | null
         }
         Relationships: []
       }

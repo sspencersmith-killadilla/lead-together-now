@@ -69,6 +69,13 @@ function Home() {
   const other = (p: Pairing) => (p.leader_id === userId ? p.report_id : p.leader_id);
 
   return (
+    <div className="space-y-10">
+    {(workspace.welcome_headline || workspace.welcome_tagline) && (
+      <div className="rounded-2xl border border-border bg-card/60 p-8">
+        {workspace.welcome_headline && <h2 className="font-serif text-3xl italic">{workspace.welcome_headline}</h2>}
+        {workspace.welcome_tagline && <p className="mt-2 text-muted-foreground">{workspace.welcome_tagline}</p>}
+      </div>
+    )}
     <div className="grid gap-12 lg:grid-cols-[1fr_320px]">
       <section>
         <h1 className="text-3xl">Your 1-on-1s</h1>
@@ -138,6 +145,7 @@ function Home() {
           </ul>
         )}
       </aside>
+    </div>
     </div>
   );
 }
