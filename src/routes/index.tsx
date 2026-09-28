@@ -106,6 +106,12 @@ function Landing() {
               >
                 Start your first 1-on-1
               </Link>
+              <Link
+                to="/demo"
+                className="w-full rounded-full border border-primary/40 bg-transparent px-8 py-4 font-medium text-foreground transition-all hover:bg-primary/10 sm:w-auto"
+              >
+                Try the demo
+              </Link>
               <a
                 href="https://github.com"
                 target="_blank"
