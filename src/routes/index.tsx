@@ -142,6 +142,9 @@ function Landing() {
               Tandem is released under the MIT license. Use the hosted version, or run it on your own servers with your
               own AI provider. Your notes belong to you and the person you're meeting with — not to HR, and not to us.
             </p>
+            <Link to="/self-host" className="mt-8 inline-block font-medium text-accent hover:underline">
+              Run it for your organization →
+            </Link>
           </div>
         </section>
       </main>

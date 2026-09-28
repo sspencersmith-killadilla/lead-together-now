@@ -30,17 +30,34 @@ const links = [
   { to: "/settings", label: "Settings" },
 ] as const;
 
+function useAccent(color: string | null) {
+  useEffect(() => {
+    const root = document.documentElement;
+    const vars = ["--primary", "--accent", "--highlight", "--ring"];
+    if (color) vars.forEach((v) => root.style.setProperty(v, color));
+    return () => vars.forEach((v) => root.style.removeProperty(v));
+  }, [color]);
+}
+
 function Shell() {
   const { workspace, workspaces, switchWorkspace } = useWorkspace();
+  useAccent(workspace.accent_color);
+  const brand = workspace.brand_name?.trim() || "Tandem";
+  const support = workspace.support_contact?.trim();
+  const supportHref = support ? (support.includes("@") && !support.startsWith("http") ? `mailto:${support}` : support) : null;
   return (
     <div className="min-h-screen">
       <header className="border-b border-border bg-card/40 backdrop-blur-sm">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-6 gap-y-2 px-6 py-4">
           <Link to="/home" className="flex items-center gap-2.5">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-foreground">
-              <div className="h-3.5 w-3.5 rotate-45 border-2 border-background" />
-            </div>
-            <span className="font-serif text-xl italic">Tandem</span>
+            {workspace.logo_url ? (
+              <img src={workspace.logo_url} alt="" className="h-7 w-7 rounded-lg object-contain" />
+            ) : (
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-foreground">
+                <div className="h-3.5 w-3.5 rotate-45 border-2 border-background" />
+              </div>
+            )}
+            <span className="font-serif text-xl italic">{brand}</span>
           </Link>
           {workspaces.length > 1 ? (
             <select
@@ -70,6 +87,16 @@ function Shell() {
       <main className="mx-auto max-w-5xl px-6 py-10">
         <Outlet />
       </main>
+      {(supportHref || workspace.brand_name) && (
+        <footer className="mx-auto flex max-w-5xl flex-wrap justify-between gap-2 border-t border-border px-6 py-6 text-xs text-muted-foreground">
+          <span>{workspace.brand_name ? "Powered by Tandem · open source" : ""}</span>
+          {supportHref && (
+            <a href={supportHref} target="_blank" rel="noreferrer" className="hover:text-foreground">
+              Need help? {support}
+            </a>
+          )}
+        </footer>
+      )}
     </div>
   );
 }

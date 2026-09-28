@@ -4,7 +4,17 @@ import { supabase } from "@/integrations/supabase/client";
 
 export type Role = "owner" | "admin" | "member";
 export type Member = { user_id: string; role: Role; display_name: string; email: string };
-export type Workspace = { id: string; name: string; ai_enabled: boolean };
+export type Workspace = {
+  id: string;
+  name: string;
+  ai_enabled: boolean;
+  brand_name: string | null;
+  logo_url: string | null;
+  accent_color: string | null;
+  welcome_headline: string | null;
+  welcome_tagline: string | null;
+  support_contact: string | null;
+};
 
 type Ctx = {
   userId: string;
@@ -41,7 +51,7 @@ export function WorkspaceProvider({ userId, children }: { userId: string; childr
       await supabase.rpc("accept_invites");
       const { data, error } = await supabase
         .from("workspace_members")
-        .select("role, workspace_id, workspaces(id, name, ai_enabled)")
+        .select("role, workspace_id, workspaces(id, name, ai_enabled, brand_name, logo_url, accent_color, welcome_headline, welcome_tagline, support_contact)")
         .eq("user_id", userId);
       if (error) throw error;
       return (data ?? [])
