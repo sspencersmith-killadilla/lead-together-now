@@ -17,7 +17,7 @@ export async function runAI(system: string, prompt: string): Promise<string> {
   const provider = createOpenAI({
     baseURL,
     apiKey,
-    headers: usingGateway ? { "Lovable-API-Key": apiKey, "X-Lovable-AIG-SDK": "vercel-ai-sdk" } : undefined,
+    headers: usingGateway ? { "Lovable-API-Key": apiKey, "X-Lovable-AIG-SDK": "vercel-ai-sdk" } : {},
   });
 
   let failure: unknown = null;
