@@ -95,6 +95,8 @@ function Settings() {
         <button onClick={() => setCreating(true)} className="text-sm font-medium text-primary hover:underline">+ Create another workspace</button>
       </section>
 
+      {isAdmin && <Branding />}
+
       <section className="space-y-3">
         <h2 className="text-xl">Members</h2>
         <ul className="divide-y rounded-lg border bg-card">
