@@ -5,7 +5,7 @@
 Fork the repository (or remix the project in Lovable) and clone it:
 
 ```
-git clone https://github.com/<you>/tandem.git
+git clone https://github.com/mckinneylibrary/leadershiptandem.git
 cd tandem
 ```
 
