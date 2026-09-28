@@ -1,29 +1,32 @@
-# Welcome to your Lovable project
+# Tandem
 
-This project was built with [Lovable](https://lovable.dev).
+Free, open-source 1-on-1 coaching for leaders at every level: team leads, managers, executives, nonprofit coordinators, volunteer captains.
 
-## Build with Lovable
+## Features
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+- Workspaces with email invites; owner / admin / member roles
+- Flexible pairings: reporting lines, skip-levels, or coaching partners
+- Shared agenda, leader + report question prompts from templates
+- Shared notes and leader-only private notes
+- Action items that carry over until done
+- Hand-off of a 1-on-1 (and its history) to a new leader
+- Growth timeline with Markdown export
+- Optional AI summaries and action-item suggestions (never sees private notes)
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+## Privacy model
 
-## Development
+- Only the two people in a pairing can edit a meeting. A skip-level leader (the leader's leader) can read shared content.
+- Private notes are readable only by their author.
+- Workspace admins manage people and templates but cannot read notes.
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+All rules are enforced in the database with row-level security.
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
+## Stack
 
-## Built with
+TanStack Start (React 19, Vite), Tailwind CSS v4, Postgres with row-level security (Supabase-compatible), Vercel AI SDK.
 
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
+See [SELF_HOSTING.md](./SELF_HOSTING.md) and [CONTRIBUTING.md](./CONTRIBUTING.md).
+
+## License
+
+MIT — see [LICENSE](./LICENSE).

@@ -14,6 +14,10 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedHomeRouteImport } from './routes/_authenticated.home'
 import { Route as AuthenticatedPeopleRouteImport } from './routes/_authenticated.people'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated.settings'
+import { Route as AuthenticatedTemplatesRouteImport } from './routes/_authenticated.templates'
+import { Route as AuthenticatedGrowthPairingIdRouteImport } from './routes/_authenticated.growth.$pairingId'
+import { Route as AuthenticatedMeetingsIdRouteImport } from './routes/_authenticated.meetings.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -39,18 +43,47 @@ const AuthenticatedPeopleRoute = AuthenticatedPeopleRouteImport.update({
   path: '/people',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedTemplatesRoute = AuthenticatedTemplatesRouteImport.update({
+  id: '/templates',
+  path: '/templates',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedGrowthPairingIdRoute =
+  AuthenticatedGrowthPairingIdRouteImport.update({
+    id: '/growth/$pairingId',
+    path: '/growth/$pairingId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMeetingsIdRoute = AuthenticatedMeetingsIdRouteImport.update({
+  id: '/meetings/$id',
+  path: '/meetings/$id',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/home': typeof AuthenticatedHomeRoute
   '/people': typeof AuthenticatedPeopleRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/templates': typeof AuthenticatedTemplatesRoute
+  '/growth/$pairingId': typeof AuthenticatedGrowthPairingIdRoute
+  '/meetings/$id': typeof AuthenticatedMeetingsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/home': typeof AuthenticatedHomeRoute
   '/people': typeof AuthenticatedPeopleRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/templates': typeof AuthenticatedTemplatesRoute
+  '/growth/$pairingId': typeof AuthenticatedGrowthPairingIdRoute
+  '/meetings/$id': typeof AuthenticatedMeetingsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -59,12 +92,32 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/home': typeof AuthenticatedHomeRoute
   '/_authenticated/people': typeof AuthenticatedPeopleRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/templates': typeof AuthenticatedTemplatesRoute
+  '/_authenticated/growth/$pairingId': typeof AuthenticatedGrowthPairingIdRoute
+  '/_authenticated/meetings/$id': typeof AuthenticatedMeetingsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/home' | '/people'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/home'
+    | '/people'
+    | '/settings'
+    | '/templates'
+    | '/growth/$pairingId'
+    | '/meetings/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/home' | '/people'
+  to:
+    | '/'
+    | '/auth'
+    | '/home'
+    | '/people'
+    | '/settings'
+    | '/templates'
+    | '/growth/$pairingId'
+    | '/meetings/$id'
   id:
     | '__root__'
     | '/'
@@ -72,6 +125,10 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/home'
     | '/_authenticated/people'
+    | '/_authenticated/settings'
+    | '/_authenticated/templates'
+    | '/_authenticated/growth/$pairingId'
+    | '/_authenticated/meetings/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -117,17 +174,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPeopleRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/templates': {
+      id: '/_authenticated/templates'
+      path: '/templates'
+      fullPath: '/templates'
+      preLoaderRoute: typeof AuthenticatedTemplatesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/growth/$pairingId': {
+      id: '/_authenticated/growth/$pairingId'
+      path: '/growth/$pairingId'
+      fullPath: '/growth/$pairingId'
+      preLoaderRoute: typeof AuthenticatedGrowthPairingIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/meetings/$id': {
+      id: '/_authenticated/meetings/$id'
+      path: '/meetings/$id'
+      fullPath: '/meetings/$id'
+      preLoaderRoute: typeof AuthenticatedMeetingsIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
   AuthenticatedHomeRoute: typeof AuthenticatedHomeRoute
   AuthenticatedPeopleRoute: typeof AuthenticatedPeopleRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedTemplatesRoute: typeof AuthenticatedTemplatesRoute
+  AuthenticatedGrowthPairingIdRoute: typeof AuthenticatedGrowthPairingIdRoute
+  AuthenticatedMeetingsIdRoute: typeof AuthenticatedMeetingsIdRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedHomeRoute: AuthenticatedHomeRoute,
   AuthenticatedPeopleRoute: AuthenticatedPeopleRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedTemplatesRoute: AuthenticatedTemplatesRoute,
+  AuthenticatedGrowthPairingIdRoute: AuthenticatedGrowthPairingIdRoute,
+  AuthenticatedMeetingsIdRoute: AuthenticatedMeetingsIdRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
