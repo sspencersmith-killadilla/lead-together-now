@@ -132,7 +132,10 @@ function Editor({ t, onDone }: { t: Template; onDone: () => void }) {
         updated_at: new Date().toISOString(),
       })
       .eq("id", t.id);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("Saved");
     onDone();
   }
