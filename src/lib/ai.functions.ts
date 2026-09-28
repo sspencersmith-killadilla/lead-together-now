@@ -5,7 +5,8 @@ import { runAI } from "./ai.server";
 
 const input = z.object({ meetingId: z.string().uuid() });
 
-type Sb = Parameters<Parameters<ReturnType<typeof createServerFn>["handler"]>[0]>[0] extends never ? never : any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Sb = any;
 
 // Builds the meeting transcript from SHARED content only. Private notes never reach the AI.
 async function loadMeeting(supabase: Sb, meetingId: string) {
