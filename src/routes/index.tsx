@@ -60,9 +60,7 @@ function Landing() {
     <div className="min-h-screen">
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-foreground">
-            <div className="h-4 w-4 rotate-45 border-2 border-background" />
-          </div>
+          <img src="/logo-mark.png" alt="Tandem" className="h-8 w-8 rounded-lg" />
           <span className="font-serif text-xl italic">Tandem</span>
         </div>
         <Link
@@ -158,9 +156,7 @@ function Landing() {
       <footer className="border-t border-border">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 py-12 md:flex-row">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-foreground">
-              <div className="h-4 w-4 rotate-45 border-2 border-background" />
-            </div>
+            <img src="/logo-mark.png" alt="Tandem" className="h-8 w-8 rounded-lg" />
             <span className="font-serif text-lg italic text-foreground">Tandem</span>
           </div>
           <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
