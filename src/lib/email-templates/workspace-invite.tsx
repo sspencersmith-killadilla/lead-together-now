@@ -25,7 +25,7 @@ const Email = ({ workspaceName, productName = "Tandem", inviterName, link = "htt
 
 export const template = {
   component: Email,
-  subject: (d: Record<string, any>) => `You're invited to ${d.workspaceName ?? "a workspace"} on ${d.productName ?? "Tandem"}`,
+  subject: (d: Record<string, any>) => `You're invited to ${d["workspaceName"] ?? "a workspace"} on ${d["productName"] ?? "Tandem"}`,
   displayName: "Workspace invitation",
   previewData: { workspaceName: "Northwind Team", productName: "Tandem", inviterName: "Jordan Lee", link: "https://tandem.civicplexus.org/auth?email=priya%40example.org" },
 } satisfies TemplateEntry;
