@@ -26,7 +26,7 @@ Follow [SELF_HOSTING.md](./SELF_HOSTING.md) to create a local backend and set th
 
 - **Organization-neutral:** avoid HR-specific, government-specific, or industry-specific assumptions and wording.
 - **Useful at every leadership level:** features and language should work for peers, mentors, team leads, executives, volunteers, and other relationships.
-- **Private by design:** leader private notes are author-only and must never be sent to AI.
+- **Private by design:** private notes are author-only and must never be sent to AI.
 - **AI is optional:** every core workflow must remain useful when AI is disabled or unavailable.
 - **Professional and accessible:** preserve the clean Tandem design, strong hierarchy, readable contrast, keyboard access, and phone/tablet usability.
 

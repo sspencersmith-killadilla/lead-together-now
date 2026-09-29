@@ -93,7 +93,7 @@ After deployment:
 4. Confirm all nine starter templates appear.
 5. Invite a second test account and verify it joins with the invited email.
 6. Verify shared notes are visible to both participants.
-7. Verify the leader's private notes are visible only to that author.
+7. Verify each person's private notes are visible only to their author.
 8. If AI is enabled, verify summaries use shared content only.
 
 ## Progressive web app support

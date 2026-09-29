@@ -19,7 +19,7 @@ Tandem gives two people a focused place to prepare, meet, capture commitments, a
 - Reporting, skip-level, coaching, and mentoring relationships
 - Shared agendas that both participants can build
 - Separate question sets for the leader and the other participant
-- Shared notes plus leader-only private notes
+- Shared notes plus private notes for each person
 - Action items with owners, due dates, and carry-over between meetings
 - A growth timeline with Markdown export
 - Transfer of a 1-on-1 and its history to a new leader
@@ -50,7 +50,7 @@ The public demo is a complete sample coaching check-in. Visitors can edit the ag
 ## Privacy by design
 
 - Only the two participants can edit their meeting.
-- Private notes are available to the leader and readable only by their author.
+- Private notes are available to both people and readable only by their author.
 - Private notes are never sent to AI.
 - A skip-level leader may read shared content, but never private notes.
 - Workspace admins can manage members, relationships, templates, and branding without gaining access to meeting notes.
