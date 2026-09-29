@@ -37,7 +37,7 @@ const features = [
   {
     icon: Lock,
     title: "Private when it matters",
-    body: "Shared notes for both of you. Private notes only the leader can see.",
+    body: "Shared notes for both of you. Private notes only the writer can see.",
   },
   {
     icon: ListChecks,

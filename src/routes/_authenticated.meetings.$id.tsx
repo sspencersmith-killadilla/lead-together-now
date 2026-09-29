@@ -200,7 +200,7 @@ function MeetingPage() {
             <div className="mt-2 min-h-32 whitespace-pre-wrap rounded-md border bg-muted/50 p-3 text-sm">{n.body || <span className="text-muted-foreground">Nothing yet.</span>}</div>
           </div>
         ))}
-        {isLeader && (
+        {(
           <NoteEditor key={`p-${myPrivate?.id ?? "new"}`} label="Private notes" hint="Only you can see these" meetingId={id} userId={userId} visibility="private" initial={myPrivate?.body ?? ""} />
         )}
       </section>
