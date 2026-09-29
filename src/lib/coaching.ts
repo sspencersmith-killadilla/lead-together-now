@@ -69,7 +69,7 @@ export async function startMeeting(
   pairing: Pairing,
   userId: string,
   templates: Template[],
-  opts: { templateId?: string | null; date?: string } = {},
+  opts: { templateId?: string | null | undefined; date?: string | undefined } = {},
 ) {
   const published = templates.filter((t) => t.published);
   const t =
