@@ -3,6 +3,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { useServerFn } from "@tanstack/react-start";
+import { sendInviteEmail } from "@/lib/invite.functions";
 import { CreateWorkspace, useWorkspace, type Role } from "@/lib/workspace";
 
 export const Route = createFileRoute("/_authenticated/settings")({
@@ -28,13 +30,20 @@ function Settings() {
     queryFn: async () => (await supabase.from("workspace_invites").select("*").eq("workspace_id", workspace.id).is("accepted_at", null).order("created_at")).data ?? [],
   });
 
+  const sendInvite = useServerFn(sendInviteEmail);
   const invite = useMutation({
     mutationFn: async () => {
-      const { error } = await supabase.from("workspace_invites").insert({ workspace_id: workspace.id, email: email.trim().toLowerCase(), role, invited_by: userId });
+      const { data, error } = await supabase.from("workspace_invites").insert({ workspace_id: workspace.id, email: email.trim().toLowerCase(), role, invited_by: userId }).select("id").single();
       if (error) throw error;
+      try {
+        const r = await sendInvite({ data: { inviteId: data.id, origin: window.location.origin } });
+        return r.sent;
+      } catch {
+        return false;
+      }
     },
-    onSuccess: () => {
-      toast.success(`Invite saved. Ask ${email} to sign up at this site with that email.`);
+    onSuccess: (sent) => {
+      toast.success(sent ? `Invitation emailed to ${email}.` : `Invite saved. Use "Copy link" to share it with ${email}.`);
       setEmail("");
       qc.invalidateQueries({ queryKey: ["invites"] });
     },
