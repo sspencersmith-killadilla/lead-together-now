@@ -21,9 +21,19 @@ Workspace owners and admins can invite people from **Settings**.
 1. Enter the person's email address.
 2. Choose **Member** or **Admin**.
 3. Select **Invite**.
-4. Send the person your Tandem web address yourself.
+4. Next to the pending invitation, select **Copy link** and send that link to the person.
 
-Tandem records the invitation but does not send an email. The person joins automatically the first time they sign in with the exact invited email address.
+The invitation link opens the sign-up form with their email address already filled in. They join the workspace automatically the first time they sign in with that exact address.
+
+## 2a. Scheduling 1-on-1s in your calendar
+
+Tandem keeps the rhythm of each 1-on-1 and marks a relationship **due** when it has been longer than the chosen gap. To put a session in your own calendar, select **Schedule** on the **Your 1-on-1s** or **People** page, or **Add to calendar** inside a session.
+
+1. Pick the date, time, and length.
+2. Leave **Repeat on the usual rhythm** ticked for a recurring series.
+3. Choose **Google**, **Outlook**, or **Apple / other** (a calendar file that works on iPhone, iPad, Mac, Windows, and Android).
+
+The event is added to your calendar only. Invite the other person from your calendar so they receive it too.
 
 ### Roles
 

@@ -31,6 +31,15 @@ function AuthPage() {
     if (user) navigate({ to: "/home" });
   }, [user, navigate]);
 
+  // An invitation link carries the invited address: prefill it and open the sign-up form.
+  useEffect(() => {
+    const invited = new URLSearchParams(window.location.search).get("email");
+    if (invited) {
+      setEmail(invited);
+      setMode("signup");
+    }
+  }, []);
+
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
