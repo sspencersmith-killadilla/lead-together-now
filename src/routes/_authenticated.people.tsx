@@ -164,6 +164,14 @@ function People() {
                   </button>
                 </>
               ) : null}
+              <AddToCalendar
+                label="Schedule"
+                title={`1-on-1: ${memberName(p.leader_id)} & ${memberName(p.report_id)}`}
+                description={`A regular 1-on-1. Agenda and notes live in ${workspace.brand_name || "Tandem"}.`}
+                start={nextSlot(null, p.cadence_days)}
+                repeatEveryDays={p.cadence_days}
+                allowRepeat
+              />
               <Link to="/growth/$pairingId" params={{ pairingId: p.id }} className="text-primary hover:underline">Timeline</Link>
             </li>
           );
