@@ -1,3 +1,4 @@
+import logoMark from "@/assets/logo-mark.png";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarCheck, Lock, MessagesSquare, Sparkles, TrendingUp, ListChecks } from "lucide-react";
 
@@ -60,7 +61,7 @@ function Landing() {
     <div className="min-h-screen">
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
         <div className="flex items-center gap-2.5">
-          <img src="/logo-mark.png" alt="Tandem" className="h-8 w-8 rounded-lg" />
+          <img src={logoMark} alt="Tandem" className="h-8 w-8 rounded-lg" />
           <span className="font-serif text-xl italic">Tandem</span>
         </div>
         <Link
@@ -156,7 +157,7 @@ function Landing() {
       <footer className="border-t border-border">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 py-12 md:flex-row">
           <div className="flex items-center gap-2">
-            <img src="/logo-mark.png" alt="Tandem" className="h-8 w-8 rounded-lg" />
+            <img src={logoMark} alt="Tandem" className="h-8 w-8 rounded-lg" />
             <span className="font-serif text-lg italic text-foreground">Tandem</span>
           </div>
           <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
