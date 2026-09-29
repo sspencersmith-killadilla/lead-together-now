@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
@@ -110,6 +110,21 @@ function MeetingPage() {
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["meeting", id] }),
   });
+  const navigate = useNavigate();
+  const deleteMeeting = useMutation({
+    mutationFn: async () => {
+      // Agenda items and notes are removed automatically with the meeting;
+      // action items are kept and simply detached from it.
+      const { error } = await supabase.from("meetings").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["meetings"] });
+      toast("1-on-1 deleted.");
+      navigate({ to: "/home" });
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
   const runSummary = useMutation({
     mutationFn: () => summarize({ data: { meetingId: id } }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["meeting", id] }),
@@ -160,6 +175,15 @@ function MeetingPage() {
               className="rounded-md border border-input bg-card px-4 py-2 text-sm font-medium"
             >
               {m.status === "done" ? "Reopen" : "Mark as done"}
+            </button>
+            <button
+              onClick={() => {
+                if (window.confirm("Delete this 1-on-1 and all its notes and agenda items? Action items are kept. This can't be undone.")) deleteMeeting.mutate();
+              }}
+              disabled={deleteMeeting.isPending}
+              className="rounded-md border border-input bg-card px-4 py-2 text-sm font-medium text-destructive"
+            >
+              {deleteMeeting.isPending ? "Deleting…" : "Delete"}
             </button>
           </div>
         )}
