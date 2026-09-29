@@ -23,7 +23,7 @@ function MeetingPage() {
   const qc = useQueryClient();
 
   const meeting = useQuery({
-    queryKey: ["meeting", id],
+    queryKey: ["meeting", id], refetchInterval: 5000,
     queryFn: async () => {
       const { data, error } = await supabase.from("meetings").select("*").eq("id", id).single();
       if (error) throw error;
@@ -32,16 +32,16 @@ function MeetingPage() {
     },
   });
   const agenda = useQuery({
-    queryKey: ["agenda", id],
+    queryKey: ["agenda", id], refetchInterval: 5000,
     queryFn: async () => (await supabase.from("agenda_items").select("*").eq("meeting_id", id).order("created_at")).data ?? [],
   });
   const notes = useQuery({
-    queryKey: ["notes", id],
+    queryKey: ["notes", id], refetchInterval: 5000,
     queryFn: async () => (await supabase.from("meeting_notes").select("*").eq("meeting_id", id)).data ?? [],
   });
   const pairingId = meeting.data?.pairing_id;
   const actions = useQuery({
-    queryKey: ["actions", pairingId, id],
+    queryKey: ["actions", pairingId, id], refetchInterval: 5000,
     enabled: !!pairingId,
     queryFn: async () =>
       (await supabase.from("action_items").select("*").eq("pairing_id", pairingId!).or(`done_at.is.null,meeting_id.eq.${id}`).order("created_at")).data ?? [],
