@@ -66,9 +66,7 @@ function AuthPage() {
       <div className="relative z-10 w-full max-w-md">
         <div className="mb-10 text-center">
           <Link to="/" className="inline-flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-foreground">
-              <div className="h-4 w-4 rotate-45 border-2 border-background" />
-            </div>
+            <img src="/logo-mark.png" alt="Tandem" className="h-8 w-8 rounded-lg" />
             <span className="font-serif text-xl italic">Tandem</span>
           </Link>
           <h1 className="mt-8 font-serif text-4xl text-foreground">
