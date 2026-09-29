@@ -146,19 +146,23 @@ function People() {
                     <option value={30}>Monthly</option>
                     <option value={90}>Quarterly</option>
                   </select>
-                  <select
-                    className={sel}
-                    value=""
-                    onChange={(e) => {
-                      if (e.target.value && confirm("Hand this 1-on-1 and its history to a new leader?")) update.mutate({ id: p.id, patch: { leader_id: e.target.value } });
-                    }}
-                    title="Hand off to a new leader"
-                  >
-                    <option value="">Hand off…</option>
-                    {members.filter((m) => m.user_id !== p.leader_id && m.user_id !== p.report_id).map((m) => (
-                      <option key={m.user_id} value={m.user_id}>{m.display_name}</option>
-                    ))}
-                  </select>
+                  <label className="text-xs text-muted-foreground" title="Use when this person gets a new leader. The new leader takes over all past 1-on-1s, shared notes and action items. Private notes stay with whoever wrote them.">
+                    <span className="mb-0.5 block">Give to a new leader</span>
+                    <select
+                      className={sel}
+                      value=""
+                      onChange={(e) => {
+                        const to = e.target.value;
+                        if (to && confirm(`${memberName(p.report_id)} will now meet with ${memberName(to)} instead of ${memberName(p.leader_id)}.\n\n${memberName(to)} will see all past 1-on-1s, shared notes and action items. ${memberName(p.leader_id)} will no longer have access. Private notes stay with whoever wrote them.\n\nContinue?`))
+                          update.mutate({ id: p.id, patch: { leader_id: to } });
+                      }}
+                    >
+                      <option value="">Choose new leader…</option>
+                      {members.filter((m) => m.user_id !== p.leader_id && m.user_id !== p.report_id).map((m) => (
+                        <option key={m.user_id} value={m.user_id}>{m.display_name}</option>
+                      ))}
+                    </select>
+                  </label>
                   <button className="text-muted-foreground hover:text-destructive" onClick={() => confirm("Remove this pairing and all its meetings?") && remove.mutate(p.id)}>
                     Remove
                   </button>

@@ -58,20 +58,32 @@ export async function fetchTemplates(workspaceId: string): Promise<Template[]> {
   }));
 }
 
-export async function startMeeting(pairing: Pairing, userId: string, templates: Template[]) {
+export function todayISO() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+// Creates (or reuses) a 1-on-1 for a pairing on a given date with a given template.
+// A pairing can have many 1-on-1s, each with its own template.
+export async function startMeeting(
+  pairing: Pairing,
+  userId: string,
+  templates: Template[],
+  opts: { templateId?: string | null | undefined; date?: string | undefined } = {},
+) {
   const published = templates.filter((t) => t.published);
-  const t = published.find((x) => x.id === pairing.template_id) ?? published[0];
-  // Reuse an open meeting from today so both people land in the same 1-on-1.
-  const today = new Date().toISOString().slice(0, 10);
-  const { data: existing } = await supabase
+  const t =
+    published.find((x) => x.id === (opts.templateId ?? pairing.template_id)) ?? published[0];
+  const date = opts.date ?? todayISO();
+  // Reuse an open 1-on-1 on the same day with the same template so both people land in the same one.
+  let q = supabase
     .from("meetings")
     .select("id")
     .eq("pairing_id", pairing.id)
     .eq("status", "open")
-    .gte("held_on", today)
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+    .eq("held_on", date);
+  q = t?.name ? q.eq("template_name", t.name) : q.is("template_name", null);
+  const { data: existing } = await q.order("created_at", { ascending: false }).limit(1).maybeSingle();
   if (existing) return existing.id;
   const { data, error } = await supabase
     .from("meetings")
@@ -79,6 +91,7 @@ export async function startMeeting(pairing: Pairing, userId: string, templates: 
       pairing_id: pairing.id,
       workspace_id: pairing.workspace_id,
       created_by: userId,
+      held_on: date,
       template_name: t?.name ?? null,
       leader_prompts: t?.leader_prompts ?? [],
       report_prompts: t?.report_prompts ?? [],

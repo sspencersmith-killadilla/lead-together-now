@@ -1,9 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useWorkspace } from "@/lib/workspace";
-import { daysSince, fetchTemplates, fmtDate, relationLabel, startMeeting, type Pairing } from "@/lib/coaching";
+import { daysSince, fetchTemplates, fmtDate, relationLabel, startMeeting, todayISO, type Pairing, type Template } from "@/lib/coaching";
 import { AddToCalendar } from "@/components/AddToCalendar";
 import { nextSlot } from "@/lib/calendar";
 
@@ -36,7 +37,7 @@ function Home() {
     queryKey: ["last-meetings", ids],
     enabled: ids.length > 0,
     queryFn: async () => {
-      const { data } = await supabase.from("meetings").select("id, pairing_id, held_on").in("pairing_id", ids).order("held_on", { ascending: false });
+      const { data } = await supabase.from("meetings").select("id, pairing_id, held_on").in("pairing_id", ids).lte("held_on", todayISO()).order("held_on", { ascending: false });
       const map: Record<string, { id: string; held_on: string }> = {};
       for (const m of data ?? []) if (!map[m.pairing_id]) map[m.pairing_id] = m;
       return map;
@@ -52,10 +53,20 @@ function Home() {
     },
   });
 
+  const upcoming = useQuery({
+    queryKey: ["upcoming-meetings", ids],
+    enabled: ids.length > 0,
+    queryFn: async () => {
+      const { data } = await supabase.from("meetings").select("id, pairing_id, held_on, template_name").in("pairing_id", ids).gt("held_on", todayISO()).order("held_on");
+      return data ?? [];
+    },
+  });
+
   const templates = useQuery({ queryKey: ["templates", workspace.id], queryFn: () => fetchTemplates(workspace.id) });
 
   const start = useMutation({
-    mutationFn: (p: Pairing) => startMeeting(p, userId, templates.data ?? []),
+    mutationFn: (v: { p: Pairing; templateId?: string; date?: string }) =>
+      startMeeting(v.p, userId, templates.data ?? [], { templateId: v.templateId, date: v.date }),
     onSuccess: (id) => navigate({ to: "/meetings/$id", params: { id } }),
     onError: (e: Error) => toast.error(e.message),
   });
@@ -121,12 +132,22 @@ function Home() {
                     allowRepeat
                   />
                   <button
-                    onClick={() => start.mutate(p)}
+                    onClick={() => start.mutate({ p })}
                     disabled={start.isPending}
                     className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
                   >
                     Start 1-on-1
                   </button>
+                  <PlanMeeting
+                    p={p}
+                    templates={(templates.data ?? []).filter((t) => t.published)}
+                    upcoming={(upcoming.data ?? []).filter((m) => m.pairing_id === p.id)}
+                    onPlan={async (templateId, date) => {
+                      await startMeeting(p, userId, templates.data ?? [], { templateId, date });
+                      qc.invalidateQueries({ queryKey: ["upcoming-meetings"] });
+                      toast.success("1-on-1 planned");
+                    }}
+                  />
                 </li>
               );
             })}
@@ -156,6 +177,81 @@ function Home() {
         )}
       </aside>
     </div>
+    </div>
+  );
+}
+
+const sel = "rounded-md border border-input bg-background px-2 py-1.5 text-sm";
+
+function PlanMeeting({
+  p,
+  templates,
+  upcoming,
+  onPlan,
+}: {
+  p: Pairing;
+  templates: Template[];
+  upcoming: { id: string; held_on: string; template_name: string | null }[];
+  onPlan: (templateId: string, date: string) => Promise<void>;
+}) {
+  const [open, setOpen] = useState(false);
+  const [templateId, setTemplateId] = useState(p.template_id ?? templates[0]?.id ?? "");
+  const [date, setDate] = useState("");
+  const [busy, setBusy] = useState(false);
+  return (
+    <div className="w-full">
+      {upcoming.length > 0 && (
+        <ul className="mb-2 space-y-1 text-sm">
+          {upcoming.map((m) => (
+            <li key={m.id}>
+              <Link to="/meetings/$id" params={{ id: m.id }} className="text-muted-foreground hover:text-foreground">
+                Planned {fmtDate(m.held_on)} · {m.template_name ?? "No template"} → prepare agenda
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+      {!open ? (
+        <button onClick={() => setOpen(true)} className="text-sm font-medium text-primary hover:underline">
+          + Plan a future 1-on-1
+        </button>
+      ) : (
+        <form
+          className="flex flex-wrap items-end gap-2 rounded-md border bg-background/60 p-3"
+          onSubmit={async (e) => {
+            e.preventDefault();
+            if (!date || !templateId) return;
+            setBusy(true);
+            try {
+              await onPlan(templateId, date);
+              setDate("");
+              setOpen(false);
+            } catch (err) {
+              toast.error((err as Error).message);
+            } finally {
+              setBusy(false);
+            }
+          }}
+        >
+          <label className="text-sm">
+            <span className="mb-1 block text-muted-foreground">Template</span>
+            <select className={sel} value={templateId} onChange={(e) => setTemplateId(e.target.value)}>
+              {templates.map((t) => (
+                <option key={t.id} value={t.id}>{t.name}</option>
+              ))}
+            </select>
+          </label>
+          <label className="text-sm">
+            <span className="mb-1 block text-muted-foreground">Date</span>
+            <input type="date" min={todayISO()} className={sel} value={date} onChange={(e) => setDate(e.target.value)} required />
+          </label>
+          <button disabled={busy || !date} className="rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground disabled:opacity-50">
+            Plan
+          </button>
+          <button type="button" onClick={() => setOpen(false)} className="text-sm text-muted-foreground">Cancel</button>
+          <p className="w-full text-xs text-muted-foreground">Plan as many as you like, each with its own template. Both of you can add agenda topics ahead of time.</p>
+        </form>
+      )}
     </div>
   );
 }
