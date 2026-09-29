@@ -113,10 +113,8 @@ function MeetingPage() {
   const navigate = useNavigate();
   const deleteMeeting = useMutation({
     mutationFn: async () => {
-      // Remove child rows first, then the meeting itself.
-      await supabase.from("agenda_items").delete().eq("meeting_id", id);
-      await supabase.from("meeting_notes").delete().eq("meeting_id", id);
-      await supabase.from("action_items").delete().eq("meeting_id", id);
+      // Agenda items and notes are removed automatically with the meeting;
+      // action items are kept and simply detached from it.
       const { error } = await supabase.from("meetings").delete().eq("id", id);
       if (error) throw error;
     },
