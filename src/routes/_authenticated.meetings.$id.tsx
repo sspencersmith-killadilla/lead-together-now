@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
@@ -109,6 +109,23 @@ function MeetingPage() {
       await supabase.from("meetings").update({ status }).eq("id", id);
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["meeting", id] }),
+  });
+  const navigate = useNavigate();
+  const deleteMeeting = useMutation({
+    mutationFn: async () => {
+      // Remove child rows first, then the meeting itself.
+      await supabase.from("agenda_items").delete().eq("meeting_id", id);
+      await supabase.from("meeting_notes").delete().eq("meeting_id", id);
+      await supabase.from("action_items").delete().eq("meeting_id", id);
+      const { error } = await supabase.from("meetings").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["meetings"] });
+      toast("1-on-1 deleted.");
+      navigate({ to: "/home" });
+    },
+    onError: (e: Error) => toast.error(e.message),
   });
   const runSummary = useMutation({
     mutationFn: () => summarize({ data: { meetingId: id } }),
