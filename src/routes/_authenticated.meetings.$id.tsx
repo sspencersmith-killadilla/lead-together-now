@@ -7,6 +7,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useWorkspace } from "@/lib/workspace";
 import { asList, fmtDate, type Pairing } from "@/lib/coaching";
 import { suggestActionItems, summarizeMeeting } from "@/lib/ai.functions";
+import { AddToCalendar } from "@/components/AddToCalendar";
+import { nextSlot } from "@/lib/calendar";
 
 export const Route = createFileRoute("/_authenticated/meetings/$id")({
   head: () => ({ meta: [{ title: "1-on-1 — Tandem" }, { name: "description", content: "Agenda, notes and action items." }] }),
