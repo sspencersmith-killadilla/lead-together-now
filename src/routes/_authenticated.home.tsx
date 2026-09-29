@@ -156,6 +156,24 @@ function Home() {
       </section>
 
       <aside>
+        <h2 className="text-xl">Upcoming 1-on-1s</h2>
+        {!upcoming.data?.length ? (
+          <p className="mt-4 mb-8 text-sm text-muted-foreground">Nothing planned yet. Use “+ Plan a future 1-on-1” under a person to add one.</p>
+        ) : (
+          <ul className="mt-4 mb-8 space-y-3">
+            {upcoming.data.map((m) => {
+              const p = pairings.data?.find((x) => x.id === m.pairing_id);
+              return (
+                <li key={m.id}>
+                  <Link to="/meetings/$id" params={{ id: m.id }} className="block rounded-md border bg-card p-3 text-sm hover:border-primary">
+                    <p className="font-medium">{fmtDate(m.held_on)} · {p ? memberName(other(p)) : ""}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">{m.template_name ?? "No template"} · prepare agenda →</p>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        )}
         <h2 className="text-xl">Open action items</h2>
         {!actions.data?.length ? (
           <p className="mt-4 text-sm text-muted-foreground">Nothing open. Nice.</p>
