@@ -110,11 +110,11 @@
   }
   .font-serif { font-weight: 700; font-style: normal !important; }
   h1 .italic, h2 .italic, h3 .italic {
-    font-style: normal;
+    font-style: normal !important;
     background: var(--gradient-brand);
     -webkit-background-clip: text;
     background-clip: text;
-    color: transparent;
+    color: transparent !important;
   }
   ::selection {
     background-color: color-mix(in oklab, var(--accent) 30%, transparent);
