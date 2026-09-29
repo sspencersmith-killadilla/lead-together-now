@@ -54,7 +54,7 @@ The **Your 1-on-1s** page shows each of your relationships, when you last met, a
 1. Select **Start 1-on-1**.
 2. Add or complete agenda topics.
 3. Use the leader and participant questions to guide the conversation.
-4. Write shared or private notes.
+4. Write shared notes; the leader can also keep private notes.
 5. Create action items, assign an owner, and add a due date when useful.
 6. Mark actions complete from the meeting or the home page.
 
@@ -64,7 +64,7 @@ Open actions remain visible until completed. The latest published template is co
 
 - **Your shared notes** are visible to the other participant and to anyone explicitly allowed to read shared content, such as an applicable skip-level leader.
 - **The other participant's shared notes** remain attributed to that person.
-- **Private notes** are visible only to their author.
+- **Private notes** are available to the leader and visible only to that author.
 - **Private notes are never sent to AI.**
 
 Workspace owners and admins do not receive special access to meeting notes. Permissions are enforced in the database, not only by hiding controls on the page.

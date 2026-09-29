@@ -74,7 +74,7 @@ The `public.create_workspace` function in `drizzle/migrations/0001_starter_templ
 3. Verify readable contrast for the custom accent color.
 4. Confirm the logo URL works for signed-in workspace branding.
 5. Check page titles, descriptions, support links, and repository links.
-6. Verify that private notes remain author-only and never reach AI.
+6. Verify that leader private notes remain author-only and never reach AI.
 
 ## License and attribution
 
