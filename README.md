@@ -69,7 +69,11 @@ Tandem currently requires an internet connection and does not cache meeting note
 
 ## Invitations
 
-Invitations are recorded inside Tandem; the app does not send an invitation email. An admin should share the Tandem address with the invitee. When that person signs up with the invited email address, they join the workspace automatically.
+An admin adds an email address in Settings and copies the invitation link for that person. The link opens sign-up with their address pre-filled, and they join the workspace automatically on first sign-in.
+
+## Calendar
+
+Every 1-on-1 and every relationship offers **Add to calendar** — Google Calendar, Outlook, and a standard calendar file for Apple Calendar and other apps — with an optional recurring series matching the relationship's chosen rhythm.
 
 ## Technology
 
