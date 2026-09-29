@@ -178,6 +178,15 @@ function MeetingPage() {
             >
               {m.status === "done" ? "Reopen" : "Mark as done"}
             </button>
+            <button
+              onClick={() => {
+                if (window.confirm("Delete this 1-on-1 and all its notes, agenda items and action items? This can't be undone.")) deleteMeeting.mutate();
+              }}
+              disabled={deleteMeeting.isPending}
+              className="rounded-md border border-input bg-card px-4 py-2 text-sm font-medium text-destructive"
+            >
+              {deleteMeeting.isPending ? "Deleting…" : "Delete"}
+            </button>
           </div>
         )}
       </div>
