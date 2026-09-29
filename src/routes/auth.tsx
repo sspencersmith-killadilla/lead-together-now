@@ -1,3 +1,4 @@
+import logoMark from "@/assets/logo-mark.png";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -66,7 +67,7 @@ function AuthPage() {
       <div className="relative z-10 w-full max-w-md">
         <div className="mb-10 text-center">
           <Link to="/" className="inline-flex items-center gap-2.5">
-            <img src="/logo-mark.png" alt="Tandem" className="h-8 w-8 rounded-lg" />
+            <img src={logoMark} alt="Tandem" className="h-8 w-8 rounded-lg" />
             <span className="font-serif text-xl italic">Tandem</span>
           </Link>
           <h1 className="mt-8 font-serif text-4xl text-foreground">

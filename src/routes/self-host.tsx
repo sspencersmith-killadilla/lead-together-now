@@ -1,3 +1,4 @@
+import logoMark from "@/assets/logo-mark.png";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/self-host")({
@@ -52,7 +53,7 @@ function SelfHost() {
       <header className="border-b border-border">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-5">
           <Link to="/" className="flex items-center gap-2.5">
-            <img src="/logo-mark.png" alt="Tandem" className="h-7 w-7 rounded-lg" />
+            <img src={logoMark} alt="Tandem" className="h-7 w-7 rounded-lg" />
             <span className="font-serif text-xl italic">Tandem</span>
           </Link>
           <Link to="/auth" className="text-sm text-muted-foreground hover:text-foreground">Sign in</Link>
