@@ -146,12 +146,22 @@ function MeetingPage() {
           </p>
         </div>
         {isParty && (
-          <button
-            onClick={() => setStatus.mutate(m.status === "done" ? "open" : "done")}
-            className="rounded-md border border-input bg-card px-4 py-2 text-sm font-medium"
-          >
-            {m.status === "done" ? "Reopen" : "Mark as done"}
-          </button>
+          <div className="flex items-center gap-4">
+            <AddToCalendar
+              label="Add to calendar"
+              title={`1-on-1: ${memberName(p.leader_id)} & ${memberName(p.report_id)}`}
+              description={`Agenda and notes live in ${workspace.brand_name || "Tandem"}: ${typeof window !== "undefined" ? window.location.href : ""}`}
+              start={nextSlot(m.held_on, p.cadence_days)}
+              repeatEveryDays={p.cadence_days}
+              allowRepeat
+            />
+            <button
+              onClick={() => setStatus.mutate(m.status === "done" ? "open" : "done")}
+              className="rounded-md border border-input bg-card px-4 py-2 text-sm font-medium"
+            >
+              {m.status === "done" ? "Reopen" : "Mark as done"}
+            </button>
+          </div>
         )}
       </div>
 

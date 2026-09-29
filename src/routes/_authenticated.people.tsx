@@ -5,6 +5,8 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useWorkspace } from "@/lib/workspace";
 import { fetchTemplates, relationLabel, type Pairing } from "@/lib/coaching";
+import { AddToCalendar } from "@/components/AddToCalendar";
+import { nextSlot } from "@/lib/calendar";
 
 export const Route = createFileRoute("/_authenticated/people")({
   head: () => ({ meta: [{ title: "People — Tandem" }, { name: "description", content: "Who meets with whom." }] }),
