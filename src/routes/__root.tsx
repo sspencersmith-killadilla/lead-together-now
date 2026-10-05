@@ -1,3 +1,4 @@
+import { DEFAULT_SUPPORT, supportHref } from "@/lib/site";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -57,6 +58,9 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
             Go home
           </a>
         </div>
+        <p className="mt-6 text-xs text-muted-foreground">
+          Still stuck? <a href={supportHref(DEFAULT_SUPPORT)} className="underline">{DEFAULT_SUPPORT}</a>
+        </p>
       </div>
     </div>
   );

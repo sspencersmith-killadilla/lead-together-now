@@ -112,6 +112,20 @@ If you change the product identity, update the PWA files described in [BRANDING.
 - Monitor failed sign-ins, database health, and deployment errors.
 - Review dependency and platform updates regularly.
 
+## Reminders, limits and legal pages
+
+- **Migrations:** also apply `0003_readiness_audit_quota_account.sql` and `0004_cron_token.sql` (activity log, AI limit, account options, scheduler token).
+- **Overdue reminders:** schedule a daily `POST` to `/api/public/cron/overdue-reminders` with `Authorization: Bearer <token>`, where the token is the `reminders` row in `private.cron_tokens`. With `pg_cron` + `pg_net`:
+  ```sql
+  select cron.schedule('tandem-overdue-reminders', '0 14 * * *', $q$select net.http_post(
+    url:='https://YOUR-SITE/api/public/cron/overdue-reminders',
+    headers:=jsonb_build_object('Authorization','Bearer '||(select token from private.cron_tokens where name='reminders')),
+    body:='{}'::jsonb)$q$);
+  ```
+  Set `SITE_URL` so email links point at your site. Emails need a verified sender domain.
+- **AI limit:** `AI_HOURLY_LIMIT` (default 20 per person per hour).
+- **Help contact and legal pages:** change `DEFAULT_SUPPORT` in `src/lib/site.ts`, and edit `src/routes/terms.tsx` and `src/routes/privacy.tsx` for your organization.
+
 ## Updating your installation
 
 Keep your changes on a branch or fork. To adopt upstream updates:

@@ -10,6 +10,9 @@ type Sb = any;
 
 // Builds the meeting transcript from SHARED content only. Private notes never reach the AI.
 async function loadMeeting(supabase: Sb, meetingId: string) {
+  // Per-person hourly AI limit keeps costs predictable.
+  const { data: ok } = await supabase.rpc("consume_ai_quota", { _limit: Number(process.env["AI_HOURLY_LIMIT"] ?? 20) });
+  if (!ok) throw new Error("You've reached the hourly AI limit. Please try again later.");
   const { data: m, error } = await supabase.from("meetings").select("*").eq("id", meetingId).single();
   if (error || !m) throw new Error("Meeting not found.");
   const { data: ws } = await supabase.from("workspaces").select("ai_enabled").eq("id", m.workspace_id).single();

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useAuth } from "@/lib/auth";
 import { FullPageMessage, WorkspaceProvider, useWorkspace } from "@/lib/workspace";
 import { supabase } from "@/integrations/supabase/client";
+import { DEFAULT_SUPPORT, supportHref as toHref } from "@/lib/site";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
@@ -44,8 +45,8 @@ function Shell() {
   const { workspace, workspaces, switchWorkspace } = useWorkspace();
   useAccent(workspace.accent_color);
   const brand = workspace.brand_name?.trim() || "Tandem";
-  const support = workspace.support_contact?.trim();
-  const supportHref = support ? (support.includes("@") && !support.startsWith("http") ? `mailto:${support}` : support) : null;
+  const support = workspace.support_contact?.trim() || DEFAULT_SUPPORT;
+  const supportHref = toHref(support);
   return (
     <div className="min-h-screen">
       <header className="border-b border-border bg-card/40 backdrop-blur-sm">
@@ -86,10 +87,14 @@ function Shell() {
       <main className="mx-auto max-w-5xl px-6 py-10">
         <Outlet />
       </main>
-      {(supportHref || workspace.brand_name) && (
+      {(
         <footer className="mx-auto flex max-w-5xl flex-wrap justify-between gap-2 border-t border-border px-6 py-6 text-xs text-muted-foreground">
-          <span>{workspace.brand_name ? "Powered by Tandem · open source" : ""}</span>
-          {supportHref && (
+          <span className="flex gap-4">
+            <span>{workspace.brand_name ? "Powered by Tandem · open source" : "Tandem · open source"}</span>
+            <Link to="/terms" className="hover:text-foreground">Terms</Link>
+            <Link to="/privacy" className="hover:text-foreground">Privacy</Link>
+          </span>
+          {(
             <a href={supportHref} target="_blank" rel="noreferrer" className="hover:text-foreground">
               Need help? {support}
             </a>

@@ -14,6 +14,7 @@ export type Workspace = {
   welcome_headline: string | null;
   welcome_tagline: string | null;
   support_contact: string | null;
+  onboarding_dismissed: boolean;
 };
 
 type Ctx = {
@@ -51,7 +52,7 @@ export function WorkspaceProvider({ userId, children }: { userId: string; childr
       await supabase.rpc("accept_invites");
       const { data, error } = await supabase
         .from("workspace_members")
-        .select("role, workspace_id, workspaces(id, name, ai_enabled, brand_name, logo_url, accent_color, welcome_headline, welcome_tagline, support_contact)")
+        .select("role, workspace_id, workspaces(id, name, ai_enabled, brand_name, logo_url, accent_color, welcome_headline, welcome_tagline, support_contact, onboarding_dismissed)")
         .eq("user_id", userId);
       if (error) throw error;
       return (data ?? [])

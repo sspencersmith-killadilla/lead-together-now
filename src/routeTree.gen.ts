@@ -13,13 +13,17 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as DemoRouteImport } from './routes/demo'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SelfHostRouteImport } from './routes/self-host'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedHomeRouteImport } from './routes/_authenticated.home'
 import { Route as AuthenticatedPeopleRouteImport } from './routes/_authenticated.people'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated.settings'
 import { Route as AuthenticatedTemplatesRouteImport } from './routes/_authenticated.templates'
 import { Route as AuthenticatedGrowthPairingIdRouteImport } from './routes/_authenticated.growth.$pairingId'
 import { Route as AuthenticatedMeetingsIdRouteImport } from './routes/_authenticated.meetings.$id'
+import { Route as ApiPublicCronOverdueRemindersRouteImport } from './routes/api/public/cron/overdue-reminders'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,9 +45,24 @@ const DemoRoute = DemoRouteImport.update({
   path: '/demo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SelfHostRoute = SelfHostRouteImport.update({
   id: '/self-host',
   path: '/self-host',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedHomeRoute = AuthenticatedHomeRouteImport.update({
@@ -77,6 +96,12 @@ const AuthenticatedMeetingsIdRoute = AuthenticatedMeetingsIdRouteImport.update({
   path: '/meetings/$id',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const ApiPublicCronOverdueRemindersRoute =
+  ApiPublicCronOverdueRemindersRouteImport.update({
+    id: '/api/public/cron/overdue-reminders',
+    path: '/api/public/cron/overdue-reminders',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const LovableEmailTransactionalPreviewRoute =
   LovableEmailTransactionalPreviewRouteImport.update({
     id: '/lovable/email/transactional/preview',
@@ -88,26 +113,34 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/demo': typeof DemoRoute
+  '/privacy': typeof PrivacyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/self-host': typeof SelfHostRoute
+  '/terms': typeof TermsRoute
   '/home': typeof AuthenticatedHomeRoute
   '/people': typeof AuthenticatedPeopleRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/templates': typeof AuthenticatedTemplatesRoute
   '/growth/$pairingId': typeof AuthenticatedGrowthPairingIdRoute
   '/meetings/$id': typeof AuthenticatedMeetingsIdRoute
+  '/api/public/cron/overdue-reminders': typeof ApiPublicCronOverdueRemindersRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/demo': typeof DemoRoute
+  '/privacy': typeof PrivacyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/self-host': typeof SelfHostRoute
+  '/terms': typeof TermsRoute
   '/home': typeof AuthenticatedHomeRoute
   '/people': typeof AuthenticatedPeopleRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/templates': typeof AuthenticatedTemplatesRoute
   '/growth/$pairingId': typeof AuthenticatedGrowthPairingIdRoute
   '/meetings/$id': typeof AuthenticatedMeetingsIdRoute
+  '/api/public/cron/overdue-reminders': typeof ApiPublicCronOverdueRemindersRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesById {
@@ -116,13 +149,17 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/auth': typeof AuthRoute
   '/demo': typeof DemoRoute
+  '/privacy': typeof PrivacyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/self-host': typeof SelfHostRoute
+  '/terms': typeof TermsRoute
   '/_authenticated/home': typeof AuthenticatedHomeRoute
   '/_authenticated/people': typeof AuthenticatedPeopleRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/templates': typeof AuthenticatedTemplatesRoute
   '/_authenticated/growth/$pairingId': typeof AuthenticatedGrowthPairingIdRoute
   '/_authenticated/meetings/$id': typeof AuthenticatedMeetingsIdRoute
+  '/api/public/cron/overdue-reminders': typeof ApiPublicCronOverdueRemindersRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRouteTypes {
@@ -131,26 +168,34 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/demo'
+    | '/privacy'
+    | '/reset-password'
     | '/self-host'
+    | '/terms'
     | '/home'
     | '/people'
     | '/settings'
     | '/templates'
     | '/growth/$pairingId'
     | '/meetings/$id'
+    | '/api/public/cron/overdue-reminders'
     | '/lovable/email/transactional/preview'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/demo'
+    | '/privacy'
+    | '/reset-password'
     | '/self-host'
+    | '/terms'
     | '/home'
     | '/people'
     | '/settings'
     | '/templates'
     | '/growth/$pairingId'
     | '/meetings/$id'
+    | '/api/public/cron/overdue-reminders'
     | '/lovable/email/transactional/preview'
   id:
     | '__root__'
@@ -158,13 +203,17 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/demo'
+    | '/privacy'
+    | '/reset-password'
     | '/self-host'
+    | '/terms'
     | '/_authenticated/home'
     | '/_authenticated/people'
     | '/_authenticated/settings'
     | '/_authenticated/templates'
     | '/_authenticated/growth/$pairingId'
     | '/_authenticated/meetings/$id'
+    | '/api/public/cron/overdue-reminders'
     | '/lovable/email/transactional/preview'
   fileRoutesById: FileRoutesById
 }
@@ -173,7 +222,11 @@ export interface RootRouteChildren {
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AuthRoute: typeof AuthRoute
   DemoRoute: typeof DemoRoute
+  PrivacyRoute: typeof PrivacyRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SelfHostRoute: typeof SelfHostRoute
+  TermsRoute: typeof TermsRoute
+  ApiPublicCronOverdueRemindersRoute: typeof ApiPublicCronOverdueRemindersRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
 }
 
@@ -207,11 +260,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/self-host': {
       id: '/self-host'
       path: '/self-host'
       fullPath: '/self-host'
       preLoaderRoute: typeof SelfHostRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/home': {
@@ -256,6 +330,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMeetingsIdRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/api/public/cron/overdue-reminders': {
+      id: '/api/public/cron/overdue-reminders'
+      path: '/api/public/cron/overdue-reminders'
+      fullPath: '/api/public/cron/overdue-reminders'
+      preLoaderRoute: typeof ApiPublicCronOverdueRemindersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lovable/email/transactional/preview': {
       id: '/lovable/email/transactional/preview'
       path: '/lovable/email/transactional/preview'
@@ -293,7 +374,11 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AuthRoute: AuthRoute,
   DemoRoute: DemoRoute,
+  PrivacyRoute: PrivacyRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SelfHostRoute: SelfHostRoute,
+  TermsRoute: TermsRoute,
+  ApiPublicCronOverdueRemindersRoute: ApiPublicCronOverdueRemindersRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
 }
 export const routeTree = rootRouteImport

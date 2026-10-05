@@ -100,6 +100,57 @@ export type Database = {
           },
         ]
       }
+      ai_usage: {
+        Row: {
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      audit_log: {
+        Row: {
+          action: string
+          actor_id: string | null
+          created_at: string
+          id: string
+          meta: Json
+          target_id: string | null
+          target_type: string
+          workspace_id: string
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          created_at?: string
+          id?: string
+          meta?: Json
+          target_id?: string | null
+          target_type: string
+          workspace_id: string
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          created_at?: string
+          id?: string
+          meta?: Json
+          target_id?: string | null
+          target_type?: string
+          workspace_id?: string
+        }
+        Relationships: []
+      }
       meeting_notes: {
         Row: {
           author_id: string
@@ -249,18 +300,24 @@ export type Database = {
           display_name: string
           email: string
           id: string
+          last_reminder_on: string | null
+          reminder_emails: boolean
         }
         Insert: {
           created_at?: string
           display_name?: string
           email?: string
           id: string
+          last_reminder_on?: string | null
+          reminder_emails?: boolean
         }
         Update: {
           created_at?: string
           display_name?: string
           email?: string
           id?: string
+          last_reminder_on?: string | null
+          reminder_emails?: boolean
         }
         Relationships: []
       }
@@ -391,6 +448,7 @@ export type Database = {
           id: string
           logo_url: string | null
           name: string
+          onboarding_dismissed: boolean
           support_contact: string | null
           welcome_headline: string | null
           welcome_tagline: string | null
@@ -404,6 +462,7 @@ export type Database = {
           id?: string
           logo_url?: string | null
           name: string
+          onboarding_dismissed?: boolean
           support_contact?: string | null
           welcome_headline?: string | null
           welcome_tagline?: string | null
@@ -417,6 +476,7 @@ export type Database = {
           id?: string
           logo_url?: string | null
           name?: string
+          onboarding_dismissed?: boolean
           support_contact?: string | null
           welcome_headline?: string | null
           welcome_tagline?: string | null
@@ -430,7 +490,9 @@ export type Database = {
     Functions: {
       accept_invites: { Args: never; Returns: number }
       can_view_pairing: { Args: { _p: string }; Returns: boolean }
+      consume_ai_quota: { Args: { _limit?: number }; Returns: boolean }
       create_workspace: { Args: { _name: string }; Returns: string }
+      delete_workspace: { Args: { _ws: string }; Returns: undefined }
       has_workspace_role: {
         Args: {
           _role: Database["public"]["Enums"]["workspace_role"]
@@ -442,6 +504,10 @@ export type Database = {
       is_pairing_party: { Args: { _p: string }; Returns: boolean }
       meeting_pairing: { Args: { _m: string }; Returns: string }
       shares_workspace: { Args: { _u: string }; Returns: boolean }
+      verify_cron_token: {
+        Args: { _name: string; _token: string }
+        Returns: boolean
+      }
     }
     Enums: {
       workspace_role: "owner" | "admin" | "member"

@@ -145,7 +145,7 @@ function Landing() {
             <h2 className="font-serif text-4xl text-foreground">Free as in freedom, not as in trial.</h2>
             <p className="mt-6 leading-relaxed text-muted-foreground">
               Tandem is released under the MIT license. Use the hosted version, or run it on your own servers with your
-              own AI provider. Your notes belong to you and the person you're meeting with — not to HR, and not to us.
+              own AI provider. Your notes belong to you and the person you're meeting with — not to admins, and not to us.
             </p>
             <Link to="/self-host" className="mt-8 inline-block font-medium text-accent hover:underline">
               Run it for your organization →
@@ -163,7 +163,11 @@ function Landing() {
           <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Open-source 1-on-1 coaching
           </p>
-          <p className="text-xs text-muted-foreground/60">Released under the MIT License.</p>
+          <p className="flex gap-4 text-xs text-muted-foreground/80">
+            <Link to="/terms" className="hover:text-foreground">Terms</Link>
+            <Link to="/privacy" className="hover:text-foreground">Privacy</Link>
+            <span>MIT License</span>
+          </p>
         </div>
       </footer>
     </div>

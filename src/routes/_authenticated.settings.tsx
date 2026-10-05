@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
 import { sendInviteEmail } from "@/lib/invite.functions";
+import { AccountSection, ActivityLog, AdoptionSnapshot, DataSection } from "@/components/SettingsExtras";
 import { CreateWorkspace, useWorkspace, type Role } from "@/lib/workspace";
 
 export const Route = createFileRoute("/_authenticated/settings")({
@@ -84,6 +85,8 @@ function Settings() {
         </div>
       </section>
 
+      <AccountSection />
+
       <section className="space-y-3">
         <h2 className="text-xl">Workspace</h2>
         {isAdmin ? (
@@ -103,6 +106,8 @@ function Settings() {
         )}
         <button onClick={() => setCreating(true)} className="text-sm font-medium text-primary hover:underline">+ Create another workspace</button>
       </section>
+
+      {isAdmin && <AdoptionSnapshot />}
 
       {isAdmin && <Branding />}
 
@@ -169,6 +174,9 @@ function Settings() {
           )}
         </section>
       )}
+      {isAdmin && <ActivityLog />}
+
+      {isAdmin && <DataSection />}
     </div>
   );
 }
