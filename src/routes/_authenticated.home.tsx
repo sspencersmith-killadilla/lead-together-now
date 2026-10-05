@@ -7,6 +7,7 @@ import { useWorkspace } from "@/lib/workspace";
 import { daysSince, fetchTemplates, fmtDate, relationLabel, startMeeting, todayISO, type Pairing, type Template } from "@/lib/coaching";
 import { AddToCalendar } from "@/components/AddToCalendar";
 import { nextSlot } from "@/lib/calendar";
+import { GettingStarted } from "@/components/GettingStarted";
 
 export const Route = createFileRoute("/_authenticated/home")({
   head: () => ({ meta: [{ title: "Your 1-on-1s — Tandem" }, { name: "description", content: "Your people, meetings and open action items." }] }),
@@ -83,6 +84,7 @@ function Home() {
 
   return (
     <div className="space-y-10">
+    <GettingStarted />
     {(workspace.welcome_headline || workspace.welcome_tagline) && (
       <div className="rounded-2xl border border-border bg-card/60 p-8">
         {workspace.welcome_headline && <h2 className="font-serif text-3xl italic">{workspace.welcome_headline}</h2>}
