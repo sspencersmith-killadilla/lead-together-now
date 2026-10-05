@@ -1,18 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { timingSafeEqual } from "crypto";
 
 // Daily job: email each leader one list of overdue 1-on-1s. Called by the scheduler with a shared secret.
 export const Route = createFileRoute("/api/public/cron/overdue-reminders")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const secret = process.env["LOVABLE_CRON_SECRET"] ?? "";
         const got = (request.headers.get("authorization") ?? "").replace(/^Bearer\s+/i, "");
-        const a = Buffer.from(got);
-        const b = Buffer.from(secret);
-        if (!secret || a.length !== b.length || !timingSafeEqual(a, b)) return new Response("Unauthorized", { status: 401 });
-
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+        // The scheduler's token lives in a private database table; only the server can check it.
+        const { data: ok } = await supabaseAdmin.rpc("verify_cron_token", { _name: "reminders", _token: got });
+        if (!got || !ok) return new Response("Unauthorized", { status: 401 });
+
         const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
         const today = new Date().toISOString().slice(0, 10);
         const origin = process.env["SITE_URL"] ?? new URL(request.url).origin;
