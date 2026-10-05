@@ -149,6 +149,18 @@ Tandem can be added to a home screen and opened like an app.
 
 An internet connection is required. Tandem does not currently store meeting notes for offline access.
 
+## Account, data and administration
+
+- **Forgot your password?** On the sign-in page, enter your email and choose **Forgot password?**. The link opens a page where you set a new one.
+- **Reminder emails:** leaders get at most one email a day listing 1-on-1s that are past their usual rhythm. Turn it off in **Settings → Your account**.
+- **Delete your account:** **Settings → Your account → Delete my account**. Your own notes are removed. If you own a workspace, delete it first.
+- **Getting started checklist (owners and admins):** the 1-on-1s page shows a short setup list until it's done or dismissed.
+- **Adoption (owners and admins):** Settings shows members, active pairings, 1-on-1s in the last 30 days, overdue pairings and open action items. Counts only.
+- **Activity log (owners and admins):** Settings lists who invited, removed or changed the role of someone, created or handed off pairings, edited templates, deleted 1-on-1s or changed settings. Entries can't be edited or deleted and never include note text.
+- **Export and delete (owners and admins):** **Export workspace data** downloads a file with everything you're allowed to see. Other people's private notes are never included. Owners can **Delete workspace** permanently after typing its name.
+- **AI limits:** each person can run 20 AI summaries or suggestions per hour.
+- **Terms and privacy:** linked at the bottom of every page.
+
 ## Get help
 
 If a workspace has a help contact, it appears in the footer. For the open-source project, use the [GitHub repository](https://github.com/mckinneylibrary/leadershiptandem) to review the source or open an issue.

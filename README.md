@@ -75,6 +75,15 @@ An admin adds an email address in Settings and copies the invitation link for th
 
 Every 1-on-1 and every relationship offers **Add to calendar** — Google Calendar, Outlook, and a standard calendar file for Apple Calendar and other apps — with an optional recurring series matching the relationship's chosen rhythm.
 
+## Ready for organizations
+
+- Activity log of administrative changes (no note text), visible to owners and admins
+- Workspace export and permanent deletion; self-service account deletion
+- Hourly AI limit per person (`AI_HOURLY_LIMIT`, default 20)
+- Daily overdue 1-on-1 reminder emails, with an opt-out
+- Password reset, terms of use and privacy policy pages
+- Setup checklist and an adoption snapshot for admins
+
 ## Technology
 
 Tandem uses TanStack Start, React, Tailwind CSS, PostgreSQL-compatible storage with row-level security, and the Vercel AI SDK. It can be deployed to a Workers-compatible host and connected to a hosted or self-managed Supabase-compatible backend.
