@@ -163,7 +163,11 @@ function Landing() {
           <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Open-source 1-on-1 coaching
           </p>
-          <p className="text-xs text-muted-foreground/60">Released under the MIT License.</p>
+          <p className="flex gap-4 text-xs text-muted-foreground/80">
+            <Link to="/terms" className="hover:text-foreground">Terms</Link>
+            <Link to="/privacy" className="hover:text-foreground">Privacy</Link>
+            <span>MIT License</span>
+          </p>
         </div>
       </footer>
     </div>
