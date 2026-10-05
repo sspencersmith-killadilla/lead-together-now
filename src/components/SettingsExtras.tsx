@@ -50,7 +50,7 @@ export function AdoptionSnapshot() {
         supabase.from("meetings").select("pairing_id, held_on").eq("workspace_id", workspace.id).lte("held_on", todayISO()),
       ]);
       const last: Record<string, string> = {};
-      for (const m of all.data ?? []) if (!last[m.pairing_id] || m.held_on > last[m.pairing_id]) last[m.pairing_id] = m.held_on;
+      for (const m of all.data ?? []) { const c = last[m.pairing_id]; if (!c || m.held_on > c) last[m.pairing_id] = m.held_on; }
       const overdue = (pairs.data ?? []).filter((p) => {
         const since = last[p.id] ?? p.created_at.slice(0, 10);
         return (Date.now() - Date.parse(since)) / 86400000 > p.cadence_days;
@@ -168,7 +168,7 @@ export function DataSection() {
     const typed = prompt(`This permanently deletes "${workspace.name}" and every 1-on-1, note and action item in it. Type the workspace name to confirm.`);
     if (typed !== workspace.name) return;
     const { error } = await supabase.rpc("delete_workspace", { _ws: workspace.id });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     localStorage.removeItem("tandem.workspace");
     toast.success("Workspace deleted");
     refresh();

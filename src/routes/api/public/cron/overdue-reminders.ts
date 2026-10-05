@@ -21,7 +21,7 @@ export const Route = createFileRoute("/api/public/cron/overdue-reminders")({
         if (!pairings?.length) return Response.json({ sent: 0 });
         const { data: meetings } = await supabaseAdmin.from("meetings").select("pairing_id, held_on").in("pairing_id", pairings.map((p) => p.id)).lte("held_on", today);
         const last: Record<string, string> = {};
-        for (const m of meetings ?? []) if (!last[m.pairing_id] || m.held_on > last[m.pairing_id]) last[m.pairing_id] = m.held_on;
+        for (const m of meetings ?? []) { const c = last[m.pairing_id]; if (!c || m.held_on > c) last[m.pairing_id] = m.held_on; }
 
         const byLeader: Record<string, { reportId: string; days: number }[]> = {};
         for (const p of pairings) {
