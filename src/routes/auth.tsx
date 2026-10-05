@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { useAuth } from "@/lib/auth";
+import { DEFAULT_SUPPORT, supportHref } from "@/lib/site";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -12,6 +13,8 @@ export const Route = createFileRoute("/auth")({
       { name: "description", content: "Sign in or create a free Tandem account." },
       { property: "og:title", content: "Sign in — Tandem" },
       { property: "og:description", content: "Sign in or create a free Tandem account." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: AuthPage,
@@ -57,6 +60,12 @@ function AuthPage() {
       else if (!data.session) setMsg("Check your email to confirm your account, then sign in.");
     }
     setBusy(false);
+  }
+
+  async function forgot() {
+    if (!email) return setMsg("Enter your email above, then choose Forgot password.");
+    const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/reset-password` });
+    setMsg(error ? error.message : "If that email has an account, a reset link is on its way.");
   }
 
   async function google() {
@@ -109,6 +118,14 @@ function AuthPage() {
               </label>
               <input className={field} type="password" placeholder="••••••••" minLength={8} value={password} onChange={(e) => setPassword(e.target.value)} required />
             </div>
+            {mode === "signin" && (
+              <button type="button" onClick={forgot} className="-mt-2 text-xs text-accent hover:underline">Forgot password?</button>
+            )}
+            {mode === "signup" && (
+              <p className="text-xs text-muted-foreground">
+                By creating an account you agree to the <Link to="/terms" className="text-accent hover:underline">terms of use</Link> and <Link to="/privacy" className="text-accent hover:underline">privacy policy</Link>.
+              </p>
+            )}
             {msg && <p className="text-sm text-muted-foreground">{msg}</p>}
             <button
               disabled={busy}
@@ -145,6 +162,9 @@ function AuthPage() {
           <button className="font-medium text-accent hover:underline" onClick={() => setMode(mode === "signin" ? "signup" : "signin")}>
             {mode === "signin" ? "Create an account" : "Sign in"}
           </button>
+        </p>
+        <p className="mt-4 text-center text-xs text-muted-foreground">
+          Need help? <a href={supportHref(DEFAULT_SUPPORT)} className="hover:text-foreground">{DEFAULT_SUPPORT}</a> · <Link to="/terms" className="hover:text-foreground">Terms</Link> · <Link to="/privacy" className="hover:text-foreground">Privacy</Link>
         </p>
       </div>
     </div>
