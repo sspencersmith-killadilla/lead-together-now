@@ -13,7 +13,10 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as DemoRouteImport } from './routes/demo'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SelfHostRouteImport } from './routes/self-host'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedHomeRouteImport } from './routes/_authenticated.home'
 import { Route as AuthenticatedPeopleRouteImport } from './routes/_authenticated.people'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated.settings'
@@ -42,9 +45,24 @@ const DemoRoute = DemoRouteImport.update({
   path: '/demo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SelfHostRoute = SelfHostRouteImport.update({
   id: '/self-host',
   path: '/self-host',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedHomeRoute = AuthenticatedHomeRouteImport.update({
@@ -95,7 +113,10 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/demo': typeof DemoRoute
+  '/privacy': typeof PrivacyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/self-host': typeof SelfHostRoute
+  '/terms': typeof TermsRoute
   '/home': typeof AuthenticatedHomeRoute
   '/people': typeof AuthenticatedPeopleRoute
   '/settings': typeof AuthenticatedSettingsRoute
@@ -109,7 +130,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/demo': typeof DemoRoute
+  '/privacy': typeof PrivacyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/self-host': typeof SelfHostRoute
+  '/terms': typeof TermsRoute
   '/home': typeof AuthenticatedHomeRoute
   '/people': typeof AuthenticatedPeopleRoute
   '/settings': typeof AuthenticatedSettingsRoute
@@ -125,7 +149,10 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/auth': typeof AuthRoute
   '/demo': typeof DemoRoute
+  '/privacy': typeof PrivacyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/self-host': typeof SelfHostRoute
+  '/terms': typeof TermsRoute
   '/_authenticated/home': typeof AuthenticatedHomeRoute
   '/_authenticated/people': typeof AuthenticatedPeopleRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
@@ -141,7 +168,10 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/demo'
+    | '/privacy'
+    | '/reset-password'
     | '/self-host'
+    | '/terms'
     | '/home'
     | '/people'
     | '/settings'
@@ -155,7 +185,10 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/demo'
+    | '/privacy'
+    | '/reset-password'
     | '/self-host'
+    | '/terms'
     | '/home'
     | '/people'
     | '/settings'
@@ -170,7 +203,10 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/demo'
+    | '/privacy'
+    | '/reset-password'
     | '/self-host'
+    | '/terms'
     | '/_authenticated/home'
     | '/_authenticated/people'
     | '/_authenticated/settings'
@@ -186,7 +222,10 @@ export interface RootRouteChildren {
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AuthRoute: typeof AuthRoute
   DemoRoute: typeof DemoRoute
+  PrivacyRoute: typeof PrivacyRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SelfHostRoute: typeof SelfHostRoute
+  TermsRoute: typeof TermsRoute
   ApiPublicCronOverdueRemindersRoute: typeof ApiPublicCronOverdueRemindersRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
 }
@@ -221,11 +260,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/self-host': {
       id: '/self-host'
       path: '/self-host'
       fullPath: '/self-host'
       preLoaderRoute: typeof SelfHostRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/home': {
@@ -314,7 +374,10 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AuthRoute: AuthRoute,
   DemoRoute: DemoRoute,
+  PrivacyRoute: PrivacyRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SelfHostRoute: SelfHostRoute,
+  TermsRoute: TermsRoute,
   ApiPublicCronOverdueRemindersRoute: ApiPublicCronOverdueRemindersRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
 }
