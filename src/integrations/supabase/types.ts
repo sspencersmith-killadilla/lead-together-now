@@ -504,6 +504,10 @@ export type Database = {
       is_pairing_party: { Args: { _p: string }; Returns: boolean }
       meeting_pairing: { Args: { _m: string }; Returns: string }
       shares_workspace: { Args: { _u: string }; Returns: boolean }
+      verify_cron_token: {
+        Args: { _name: string; _token: string }
+        Returns: boolean
+      }
     }
     Enums: {
       workspace_role: "owner" | "admin" | "member"
