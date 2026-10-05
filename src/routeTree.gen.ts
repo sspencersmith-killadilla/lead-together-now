@@ -20,6 +20,7 @@ import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedTemplatesRouteImport } from './routes/_authenticated.templates'
 import { Route as AuthenticatedGrowthPairingIdRouteImport } from './routes/_authenticated.growth.$pairingId'
 import { Route as AuthenticatedMeetingsIdRouteImport } from './routes/_authenticated.meetings.$id'
+import { Route as ApiPublicCronOverdueRemindersRouteImport } from './routes/api/public/cron/overdue-reminders'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 
 const IndexRoute = IndexRouteImport.update({
@@ -77,6 +78,12 @@ const AuthenticatedMeetingsIdRoute = AuthenticatedMeetingsIdRouteImport.update({
   path: '/meetings/$id',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const ApiPublicCronOverdueRemindersRoute =
+  ApiPublicCronOverdueRemindersRouteImport.update({
+    id: '/api/public/cron/overdue-reminders',
+    path: '/api/public/cron/overdue-reminders',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const LovableEmailTransactionalPreviewRoute =
   LovableEmailTransactionalPreviewRouteImport.update({
     id: '/lovable/email/transactional/preview',
@@ -95,6 +102,7 @@ export interface FileRoutesByFullPath {
   '/templates': typeof AuthenticatedTemplatesRoute
   '/growth/$pairingId': typeof AuthenticatedGrowthPairingIdRoute
   '/meetings/$id': typeof AuthenticatedMeetingsIdRoute
+  '/api/public/cron/overdue-reminders': typeof ApiPublicCronOverdueRemindersRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesByTo {
@@ -108,6 +116,7 @@ export interface FileRoutesByTo {
   '/templates': typeof AuthenticatedTemplatesRoute
   '/growth/$pairingId': typeof AuthenticatedGrowthPairingIdRoute
   '/meetings/$id': typeof AuthenticatedMeetingsIdRoute
+  '/api/public/cron/overdue-reminders': typeof ApiPublicCronOverdueRemindersRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesById {
@@ -123,6 +132,7 @@ export interface FileRoutesById {
   '/_authenticated/templates': typeof AuthenticatedTemplatesRoute
   '/_authenticated/growth/$pairingId': typeof AuthenticatedGrowthPairingIdRoute
   '/_authenticated/meetings/$id': typeof AuthenticatedMeetingsIdRoute
+  '/api/public/cron/overdue-reminders': typeof ApiPublicCronOverdueRemindersRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRouteTypes {
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/templates'
     | '/growth/$pairingId'
     | '/meetings/$id'
+    | '/api/public/cron/overdue-reminders'
     | '/lovable/email/transactional/preview'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/templates'
     | '/growth/$pairingId'
     | '/meetings/$id'
+    | '/api/public/cron/overdue-reminders'
     | '/lovable/email/transactional/preview'
   id:
     | '__root__'
@@ -165,6 +177,7 @@ export interface FileRouteTypes {
     | '/_authenticated/templates'
     | '/_authenticated/growth/$pairingId'
     | '/_authenticated/meetings/$id'
+    | '/api/public/cron/overdue-reminders'
     | '/lovable/email/transactional/preview'
   fileRoutesById: FileRoutesById
 }
@@ -174,6 +187,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   DemoRoute: typeof DemoRoute
   SelfHostRoute: typeof SelfHostRoute
+  ApiPublicCronOverdueRemindersRoute: typeof ApiPublicCronOverdueRemindersRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
 }
 
@@ -256,6 +270,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMeetingsIdRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/api/public/cron/overdue-reminders': {
+      id: '/api/public/cron/overdue-reminders'
+      path: '/api/public/cron/overdue-reminders'
+      fullPath: '/api/public/cron/overdue-reminders'
+      preLoaderRoute: typeof ApiPublicCronOverdueRemindersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lovable/email/transactional/preview': {
       id: '/lovable/email/transactional/preview'
       path: '/lovable/email/transactional/preview'
@@ -294,6 +315,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   DemoRoute: DemoRoute,
   SelfHostRoute: SelfHostRoute,
+  ApiPublicCronOverdueRemindersRoute: ApiPublicCronOverdueRemindersRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
 }
 export const routeTree = rootRouteImport

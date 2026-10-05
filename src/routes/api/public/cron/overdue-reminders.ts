@@ -38,14 +38,15 @@ export const Route = createFileRoute("/api/public/cron/overdue-reminders")({
         for (const [leaderId, rows] of Object.entries(byLeader)) {
           const me = prof[leaderId];
           if (!me?.email || !me.reminder_emails || me.last_reminder_on === today) continue;
-          const r = await sendTemplateEmail("overdue-reminder", me.email, {
+          let r: { sent: boolean } = { sent: false };
+          try { r = await sendTemplateEmail("overdue-reminder", me.email, {
             templateData: {
               name: me.display_name?.split(" ")[0],
               people: rows.map((x) => ({ name: prof[x.reportId]?.display_name ?? "Someone", days: x.days })),
               link: `${origin}/home`,
             },
             idempotencyKey: `overdue-${leaderId}-${today}`,
-          });
+          }); } catch (e) { console.error("reminder failed", leaderId, e); }
           if (r.sent) {
             sent++;
             await supabaseAdmin.from("profiles").update({ last_reminder_on: today }).eq("id", leaderId);
