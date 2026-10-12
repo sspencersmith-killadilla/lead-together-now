@@ -9,7 +9,7 @@ import { EmailChangeEmail } from '@/lib/email-templates/email-change'
 import { ReauthenticationEmail } from '@/lib/email-templates/reauthentication'
 
 // Configuration
-const SITE_NAME = "Leader Guide"
+const SITE_NAME = "Tandem"
 const SENDER_DOMAIN = "notify.tandem.civicplexus.org"
 const ROOT_DOMAIN = "tandem.civicplexus.org"
 const FROM_DOMAIN = "tandem.civicplexus.org"
