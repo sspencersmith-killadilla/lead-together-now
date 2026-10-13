@@ -56,11 +56,19 @@ export const Route = createFileRoute("/lovable/email/auth/webhook")({
             },
             recovery: {
               subject: 'Reset your password',
-              render: (data) =>
-                React.createElement(RecoveryEmail, {
+              // Link to our own page with the token hash; it's only redeemed when the
+              // person clicks a button, so email link scanners can't use it up.
+              render: (data) => {
+                let link = data.url
+                try {
+                  const hash = new URL(data.url).searchParams.get('token')
+                  if (hash) link = `${SITE_URL}/reset-password?token_hash=${encodeURIComponent(hash)}&type=recovery`
+                } catch {}
+                return React.createElement(RecoveryEmail, {
                   siteName: SITE_NAME,
-                  confirmationUrl: data.url,
-                }),
+                  confirmationUrl: link,
+                })
+              },
             },
             email_change: {
               subject: 'Confirm your new email',

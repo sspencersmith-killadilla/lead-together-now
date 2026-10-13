@@ -23,18 +23,32 @@ export const Route = createFileRoute("/reset-password")({
 function ResetPassword() {
   const navigate = useNavigate();
   const [ready, setReady] = useState(false);
+  const [tokenHash, setTokenHash] = useState<string | null>(null);
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [msg, setMsg] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
+    setTokenHash(new URLSearchParams(window.location.search).get("token_hash"));
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "PASSWORD_RECOVERY" || session) setReady(true);
     });
     supabase.auth.getSession().then(({ data: d }) => { if (d.session) setReady(true); });
     return () => data.subscription.unsubscribe();
   }, []);
+
+  async function redeem() {
+    if (!tokenHash) return;
+    setBusy(true);
+    setMsg(null);
+    const { error } = await supabase.auth.verifyOtp({ token_hash: tokenHash, type: "recovery" });
+    setBusy(false);
+    if (error) return setMsg("This reset link has expired or was already used. Go to sign in and choose \"Forgot password?\" to get a new one.");
+    window.history.replaceState(null, "", "/reset-password");
+    setTokenHash(null);
+    setReady(true);
+  }
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -67,6 +81,14 @@ function ResetPassword() {
                 {busy ? "Saving…" : "Save new password"}
               </button>
             </form>
+          ) : tokenHash ? (
+            <div className="space-y-4 text-center">
+              <p className="text-sm text-muted-foreground">Press continue to choose your new password.</p>
+              {msg && <p className="text-sm text-muted-foreground">{msg}</p>}
+              <button onClick={redeem} disabled={busy} className="w-full rounded-xl bg-primary py-4 font-semibold text-primary-foreground disabled:opacity-50">
+                {busy ? "Checking…" : "Continue"}
+              </button>
+            </div>
           ) : (
             <p className="text-center text-sm text-muted-foreground">
               Open this page from the reset link in your email. Need a new link? <Link to="/auth" className="text-accent hover:underline">Go to sign in</Link> and choose "Forgot password?".
