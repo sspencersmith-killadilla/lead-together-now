@@ -372,27 +372,33 @@ export type Database = {
         Row: {
           accepted_at: string | null
           created_at: string
+          display_name: string | null
           email: string
           id: string
           invited_by: string
+          manager_email: string | null
           role: Database["public"]["Enums"]["workspace_role"]
           workspace_id: string
         }
         Insert: {
           accepted_at?: string | null
           created_at?: string
+          display_name?: string | null
           email: string
           id?: string
           invited_by: string
+          manager_email?: string | null
           role?: Database["public"]["Enums"]["workspace_role"]
           workspace_id: string
         }
         Update: {
           accepted_at?: string | null
           created_at?: string
+          display_name?: string | null
           email?: string
           id?: string
           invited_by?: string
+          manager_email?: string | null
           role?: Database["public"]["Enums"]["workspace_role"]
           workspace_id?: string
         }
@@ -500,8 +506,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      import_people: { Args: { _rows: Json; _ws: string }; Returns: Json }
       is_member: { Args: { _ws: string }; Returns: boolean }
       is_pairing_party: { Args: { _p: string }; Returns: boolean }
+      link_import_pairings: { Args: { _ws: string }; Returns: number }
       meeting_pairing: { Args: { _m: string }; Returns: string }
       shares_workspace: { Args: { _u: string }; Returns: boolean }
       verify_cron_token: {
