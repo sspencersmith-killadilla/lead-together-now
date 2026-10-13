@@ -22,7 +22,7 @@ function HelpPage() {
     e.preventDefault();
     setState("sending");
     try {
-      await send({ data: { name, email, message, page: window.referrer || undefined } });
+      await send({ data: { name, email, message, page: document.referrer || undefined } });
       setState("sent");
     } catch {
       setState("error");
