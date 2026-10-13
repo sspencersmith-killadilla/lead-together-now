@@ -40,6 +40,8 @@ function Privacy() {
       <p>When AI is turned on, shared content from a single 1-on-1 is sent to an AI provider to write a summary or suggest action items. Private notes are never sent. Admins can turn AI off.</p>
       <h2>Emails</h2>
       <p>We send invitation emails and, if you lead 1-on-1s, an occasional reminder when one is overdue. You can turn reminders off in Settings → Your account.</p>
+      <h2>Record keeping and deletion</h2>
+      <p>1-on-1 sessions are kept as organizational records. Only workspace owners and admins can delete a session, and each deletion is recorded in the activity log. Private notes belong to their author: only the author can read or delete them, and they leave no copy behind when deleted. When a workspace is deleted, all of its records are permanently removed.</p>
       <h2>Your choices</h2>
       <ul>
         <li><strong>Export:</strong> workspace owners and admins can download the workspace's data from Settings.</li>
