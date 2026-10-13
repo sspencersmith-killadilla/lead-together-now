@@ -12,7 +12,7 @@ export function parseCsv(text: string): string[][] {
   let quoted = false;
   const src = text.replace(/^\uFEFF/, "");
   for (let i = 0; i < src.length; i++) {
-    const c = src[i];
+    const c = src[i]!;
     if (quoted) {
       if (c === '"' && src[i + 1] === '"') { cell += '"'; i++; }
       else if (c === '"') quoted = false;
@@ -39,7 +39,7 @@ export function parsePeople(text: string): ParsedImport {
   const table = parseCsv(text);
   const problems: string[] = [];
   if (table.length < 2) return { rows: [], problems: ["The file needs a header row and at least one person."] };
-  const headers = table[0];
+  const headers = table[0]!;
   const email = findCol(headers, ["email", "emailaddress", "workemail", "primaryemail"]);
   const name = findCol(headers, ["name", "fullname", "displayname"]);
   const first = findCol(headers, ["firstname", "givenname"]);
