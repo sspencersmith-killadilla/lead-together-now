@@ -1,5 +1,6 @@
 import { template as workspaceInvite } from './workspace-invite'
 import { template as overdueReminder } from './overdue-reminder'
+import { template as helpRequest } from './help-request'
 import type { ComponentType } from 'react'
 
 export interface TemplateEntry {
@@ -22,5 +23,6 @@ export interface TemplateEntry {
 export const TEMPLATES: Record<string, TemplateEntry> = {
   'workspace-invite': workspaceInvite,
   'overdue-reminder': overdueReminder,
+  'help-request': helpRequest,
   // 'welcome': welcomeTemplate,
 }

@@ -158,12 +158,13 @@ An internet connection is required. Tandem does not currently store meeting note
 - **Adoption (owners and admins):** Settings shows members, active pairings, 1-on-1s in the last 30 days, overdue pairings and open action items. Counts only.
 - **Activity log (owners and admins):** Settings lists who invited, removed or changed the role of someone, created or handed off pairings, edited templates, deleted 1-on-1s or changed settings. Entries can't be edited or deleted and never include note text.
 - **Export and delete (owners and admins):** **Export workspace data** downloads a file with everything you're allowed to see. Other people's private notes are never included. Owners can **Delete workspace** permanently after typing its name.
+- **Records retention:** 1-on-1 sessions are organizational records. Only owners and admins can delete a session (the Delete button on a 1-on-1), and every deletion is recorded in the activity log. Private notes are personal: only their author can read or delete them.
 - **AI limits:** each person can run 20 AI summaries or suggestions per hour.
 - **Terms and privacy:** linked at the bottom of every page.
 
 ## Get help
 
-If a workspace has a help contact, it appears in the footer. For the open-source project, use the [GitHub repository](https://github.com/mckinneylibrary/leadershiptandem) to review the source or open an issue.
+If a workspace has a help contact, it appears in the footer. On the hosted Tandem site, the footer link opens a short contact form — your message goes to the team and they reply to your email. For the open-source project, use the [GitHub repository](https://github.com/mckinneylibrary/leadershiptandem) to review the source or open an issue.
 ## Import your organization
 
 Owners and admins can add many people at once in **Settings → Import people**. Upload a CSV with Name, Email, Manager Email and optional Role, or use a Google Workspace user export (Google Admin console → Directory → Users → Download users → CSV). Review the list, untick anyone you don't want, choose whether to email invitations, then import. Each person is paired with their manager as soon as both have joined, and invites still require the exact email address.

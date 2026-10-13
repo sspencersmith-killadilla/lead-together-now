@@ -43,6 +43,13 @@
       "when": 1791908322342,
       "tag": "0005_people_import",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1791909059715,
+      "tag": "0006_meetings_delete_admin_only",
+      "breakpoints": true
     }
   ]
 }

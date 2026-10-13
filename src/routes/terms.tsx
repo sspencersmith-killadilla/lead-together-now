@@ -35,6 +35,8 @@ function Terms() {
         <li>Workspace owners and admins manage people and templates for their workspace, but can't read anyone's 1-on-1 notes.</li>
         <li>Only add information you're allowed to share. Follow your organization's policies on what belongs in a 1-on-1 record.</li>
       </ul>
+      <h2>Record keeping</h2>
+      <p>1-on-1 sessions are organizational records. Only workspace owners and admins can delete a session, and every deletion is recorded in the workspace's activity log. This supports records-retention obligations, including those that apply to public-sector organizations. Private notes are personal working notes: only their author can read or delete them, and they are not part of the organizational record.</p>
       <h2>Acceptable use</h2>
       <ul>
         <li>Don't use Tandem to harass anyone, break the law, or try to access data that isn't yours.</li>
