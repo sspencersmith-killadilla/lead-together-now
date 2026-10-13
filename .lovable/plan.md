@@ -1,26 +1,24 @@
-# Tandem — final readiness checklist
+# Tandem — final readiness: help routing, records retention, publish
 
-Tandem is functionally complete: sign-up/sign-in, workspaces, invites, templates, 1-on-1s (planned and live), shared and private notes, AI summaries, action items, calendar downloads, reminder and invite emails, data export, account deletion, terms/privacy pages, people import. The build is clean and the email domain is verified. What remains is a short list of finishing steps.
+Tandem is functionally complete. This plan covers the last three items: silently routing help emails to you, a government-ready records retention policy, and publishing.
 
-## 1. Publish (I can do this now)
-The latest fixes are not on the live site yet:
-- Fixed password-reset email (stops the expired-link loop caused by email scanners)
-- People import (CSV upload in Settings)
+## 1. Silent help-email routing
+- Keep help@tandem.civicplexus.org as the address shown everywhere (sign-in, terms, privacy, error pages) — users never see a personal address.
+- Add a small email-forwarding step so messages to that address arrive in your inbox at s.spencersmith@gmail.com. Replies come from you directly.
+- Note: if you reply, the person will see your Gmail address in your reply. If you'd rather reply as help@tandem.civicplexus.org, that needs Gmail's "Send mail as" setup on your side — I'll include the steps.
 
-## 2. Real help contact (needs you)
-The sign-in, terms, privacy and error pages show a placeholder address I made up: help@tandem.civicplexus.org. Send me the real address and I'll swap it in everywhere.
+## 2. Records retention policy (government-ready)
+Per your choice: **only workspace owners/admins can delete 1-on-1 sessions.**
+- Database change: the delete permission on sessions moves from "either person in the pairing" to "workspace owner or admin only", enforced in the database so it can't be bypassed from the app.
+- The Delete button disappears for leaders and staff; admins keep it.
+- The deletion is recorded in the activity log (who deleted, which session, when) — already in place via the audit triggers.
+- Terms/privacy pages get a short records-retention note explaining that organizations control deletion and should follow their own retention schedules.
+- Private notes remain author-only and deletable by their author — personal notes are not organizational records.
 
-## 3. Live-site testing (I do this after publishing)
-- Request a fresh password-reset email and complete the reset
-- Invite a real person and confirm the invite email arrives and joins them to the right workspace
-- Plan a future 1-on-1, run one, write shared and private notes, generate an AI summary
-- Upload a small CSV through Settings → Import people
-
-## 4. Optional polish (your call)
-- **Mismatched invite emails**: today an invite only works if the person signs up with the exact invited address. I can make invite links join the workspace regardless of which email they sign up with.
-- **Record-keeping rules**: for government use, public-records laws may require restricting who can delete 1-on-1 sessions. I can add a per-workspace setting.
-- **Single sign-on** (Entra ID / Okta / SAML) for larger organizations — available on an Enterprise plan; Google sign-in already works.
+## 3. Publish
+Publish the site so the password-reset fix, people import, help routing and retention policy go live, then test on the live site: password reset, invite email, planning a 1-on-1, CSV import.
 
 ## Technical details
-- Publish via the standard publish flow; no code changes needed for items 1–3 beyond the help-email swap (one constant in `src/lib/site.ts`).
-- Item 4 options are small, isolated changes: invite acceptance logic in `accept_invites()`, a `workspaces` flag checked by the delete-session mutation, and auth provider configuration.
+- Help routing: forwarding rule for the verified sender domain's inbound mail (or a `support_contact` default pointing at the forwarding address); no user-facing change.
+- Retention: replace the `meetings` DELETE policy with one using `has_workspace_role(auth.uid(), workspace_id, 'owner','admin')`; hide the delete button in `src/routes/_authenticated.meetings.$id.tsx` for non-admins; update USER_GUIDE.md and terms/privacy wording.
+- No breaking schema changes; single additive migration for the policy swap.
