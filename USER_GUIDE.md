@@ -164,3 +164,6 @@ An internet connection is required. Tandem does not currently store meeting note
 ## Get help
 
 If a workspace has a help contact, it appears in the footer. For the open-source project, use the [GitHub repository](https://github.com/mckinneylibrary/leadershiptandem) to review the source or open an issue.
+## Import your organization
+
+Owners and admins can add many people at once in **Settings → Import people**. Upload a CSV with Name, Email, Manager Email and optional Role, or use a Google Workspace user export (Google Admin console → Directory → Users → Download users → CSV). Review the list, untick anyone you don't want, choose whether to email invitations, then import. Each person is paired with their manager as soon as both have joined, and invites still require the exact email address.
