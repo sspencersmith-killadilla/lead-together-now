@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
 import { sendInviteEmail } from "@/lib/invite.functions";
 import { AccountSection, ActivityLog, AdoptionSnapshot, DataSection } from "@/components/SettingsExtras";
+import { ImportPeople } from "@/components/ImportPeople";
 import { CreateWorkspace, useWorkspace, type Role } from "@/lib/workspace";
 
 export const Route = createFileRoute("/_authenticated/settings")({
@@ -174,6 +175,8 @@ function Settings() {
           )}
         </section>
       )}
+      {isAdmin && <ImportPeople />}
+
       {isAdmin && <ActivityLog />}
 
       {isAdmin && <DataSection />}

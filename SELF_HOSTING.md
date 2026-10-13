@@ -114,7 +114,7 @@ If you change the product identity, update the PWA files described in [BRANDING.
 
 ## Reminders, limits and legal pages
 
-- **Migrations:** also apply `0003_readiness_audit_quota_account.sql` and `0004_cron_token.sql` (activity log, AI limit, account options, scheduler token).
+- **Migrations:** also apply `0003_readiness_audit_quota_account.sql` and `0004_cron_token.sql`, `0005_people_import.sql` (people import, activity log, AI limit, account options, scheduler token).
 - **Overdue reminders:** schedule a daily `POST` to `/api/public/cron/overdue-reminders` with `Authorization: Bearer <token>`, where the token is the `reminders` row in `private.cron_tokens`. With `pg_cron` + `pg_net`:
   ```sql
   select cron.schedule('tandem-overdue-reminders', '0 14 * * *', $q$select net.http_post(
