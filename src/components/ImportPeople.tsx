@@ -32,12 +32,12 @@ export function ImportPeople() {
   }
 
   async function runImport() {
-    if (!rows) return;
+    if (!rows) return undefined;
     const chosen = rows.filter((r) => r.keep).map(({ keep: _k, ...r }) => r);
     if (!chosen.length) return;
     setBusy(true);
     const { data, error } = await supabase.rpc("import_people", { _ws: workspace.id, _rows: chosen });
-    if (error) { setBusy(false); return toast.error(error.message); }
+    if (error) { setBusy(false); toast.error(error.message); return; }
     const res = data as { invite_ids: string[]; skipped: number; pairings: number };
     let sent = 0;
     if (sendEmails) {
