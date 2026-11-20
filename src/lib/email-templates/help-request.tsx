@@ -28,7 +28,7 @@ const Email = ({ fromName, fromEmail, message, page }: Props) => (
 
 export const template = {
   component: Email,
-  subject: (d: Record<string, any>) => `Tandem help request from ${d.fromName || d.fromEmail || 'a user'}`,
+  subject: (d: Record<string, any>) => `Tandem help request from ${d['fromName'] || d['fromEmail'] || 'a user'}`,
   displayName: 'Help request',
   previewData: { fromName: 'Jordan Lee', fromEmail: 'jordan@example.org', message: 'How do I change a pairing template?', page: '/home' },
   // Fixed recipient: help requests always go to the site owner. Users never see this address.
